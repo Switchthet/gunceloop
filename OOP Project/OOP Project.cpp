@@ -108,14 +108,29 @@ void ManagerLogInMenu() {
 void CustomerLogInMenu() {
     string userName;
     string password;
+    string control;
     int menuNum;
+    string lines;
+    int customerNo;
+    vector<string> customers;
     clear();
     cout << "Kullanici Adi: ";
     cin >> userName;
     cout << "\nSifre: ";
     cin >> password;
-    ofstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.txt");   
+    control = userName + ":" + password;
+    fstream kullanıcılarTXT;
+    kullanıcılarTXT.open("kullanıcılar.txt");
+    while (getline(kullanıcılarTXT, lines, '|')) customers.push_back(lines);
+    if (control == lines)
+    {
+        cout << "basarili giris";
+    }
+
+    else {
+        cout << "tekrar deneyin";
+        CustomerLogInMenu();
+    }
 }
 
 void clear() {
@@ -146,19 +161,29 @@ void CustomerSignUp() {
     string password;
     string eMail;
     string username;
-    string line;
+    string lines;
+    int menuNo;
+    bool gecis = true;
     vector<string> customers;
     clear();
-    cout << "\nKullanici Adi: ";
+    cout << "Kullanici Adi: ";
     cin >> username;
     cout << "\nSifre: ";
     cin >> password;
-    cout << "E-Mail: ";
+    cout << "\nE-Mail: ";
     cin >> eMail;
-    ofstream kullanıcılarTXT;
+    fstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
-    kullanıcılarTXT << "kullanici:" + username + ":" + password + ":" + eMail + "\n";
-    Reload();
+    kullanıcılarTXT <<username + ":" + password + "|" + eMail + "|" + "\n";
+    while (getline(kullanıcılarTXT, lines, '|')) customers.push_back(lines);
+    while (gecis == true) {
+        cout << "\nBasariyla kaydoldunuz. Geri gelmek için lütfen 5'e basiniz.";
+        cin >> menuNo;
+        if (menuNo == 5) {
+            gecis = false;
+            MainMenu();
+        }
+    }
 
 }
 
@@ -180,16 +205,15 @@ void MainMenu() {
 
 void Reload() {
     string lines;
-    int i;
+    int customerNo;
     vector<string> customers;
     fstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, lines)) customers.push_back(lines);
+    while (getline(kullanıcılarTXT, lines, '|')) customers.push_back(lines);
 }
 
 #pragma endregion
 int main()
 {
-    Reload();
     MainMenu();
 }
