@@ -1,0 +1,5 @@
+﻿  OOP Project.cpp
+C:\Users\fatih\OneDrive\Masaüstü\deneme\OOP Project\OOP Project.cpp(95,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
+C:\Users\fatih\OneDrive\Masaüstü\deneme\OOP Project\OOP Project.cpp(111,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
+C:\Users\fatih\OneDrive\Masaüstü\deneme\OOP Project\OOP Project.cpp(183,9): warning C4101: 'i': yerel değişken başvurusu kaldırıldı
+  OOP Project.vcxproj -> C:\Users\fatih\OneDrive\Masaüstü\deneme\Debug\OOP Project.exe
