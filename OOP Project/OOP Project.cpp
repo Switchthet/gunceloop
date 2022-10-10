@@ -185,10 +185,6 @@ void Reload() {
     fstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.txt");
     while (getline(kullanıcılarTXT, lines)) customers.push_back(lines);
-    for (i = 0; i < customers.size(); i++)
-    {
-
-    }
 }
 
 #pragma endregion
