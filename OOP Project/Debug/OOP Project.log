@@ -1,6 +1,7 @@
 ﻿  OOP Project.cpp
-C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(95,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
-C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(114,9): warning C4101: 'customerNo': yerel değişken başvurusu kaldırıldı
-C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(112,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
-C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(208,9): warning C4101: 'customerNo': yerel değişken başvurusu kaldırıldı
+C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(98,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
+C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(131,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(118,9): warning C4101: 'customerNo': yerel değişken başvurusu kaldırıldı
+C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(115,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
+C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\OOP Project\OOP Project.cpp(227,9): warning C4101: 'customerNo': yerel değişken başvurusu kaldırıldı
   OOP Project.vcxproj -> C:\Users\fatih\OneDrive\Belgeler\GitHub\gunceloop\Debug\OOP Project.exe

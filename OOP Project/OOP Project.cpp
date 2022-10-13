@@ -4,6 +4,9 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <string.h>
+#include <algorithm>
+#include <iterator>
 
 void clear();
 void MainMenu();
@@ -110,7 +113,8 @@ void CustomerLogInMenu() {
     string password;
     string control;
     int menuNum;
-    string lines;
+    string line;
+    bool isTrue = true;
     int customerNo;
     vector<string> customers;
     clear();
@@ -118,19 +122,34 @@ void CustomerLogInMenu() {
     cin >> userName;
     cout << "\nSifre: ";
     cin >> password;
-    control = userName + ":" + password;
-    fstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, lines, '|')) customers.push_back(lines);
-    if (control == lines)
-    {
-        cout << "basarili giris";
-    }
+    control = userName + ":" + password + " ";
 
-    else {
-        cout << "tekrar deneyin";
-        CustomerLogInMenu();
+    ifstream kullanıcılarTXT;
+    kullanıcılarTXT.open("kullanıcılar.txt");
+    while (getline(kullanıcılarTXT, line, '.')) customers.push_back(line);
+
+        for (int i = 0; i < customers.size(); i++)
+        {
+            if (control == customers[i]) {
+                cout << "oldu amk";
+            }
+            else {
+                cout << "olmadı amk";
+            }
+            
+        }
+    
+
+    /*auto it = find(begin(customers), end(customers), control);
+    if (it != end(customers)) {
+        cout << "basarili";
     }
+    else
+    {
+        cout << "olmadi aga";
+    }*/
+
+
 }
 
 void clear() {
@@ -172,10 +191,10 @@ void CustomerSignUp() {
     cin >> password;
     cout << "\nE-Mail: ";
     cin >> eMail;
-    fstream kullanıcılarTXT;
+    ofstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
-    kullanıcılarTXT <<username + ":" + password + "|" + eMail + "|" + "\n";
-    while (getline(kullanıcılarTXT, lines, '|')) customers.push_back(lines);
+    kullanıcılarTXT << username + ":" + password + "." + eMail + "." << endl;
+    kullanıcılarTXT.close();
     while (gecis == true) {
         cout << "\nBasariyla kaydoldunuz. Geri gelmek için lütfen 5'e basiniz.";
         cin >> menuNo;
@@ -209,7 +228,7 @@ void Reload() {
     vector<string> customers;
     fstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, lines, '|')) customers.push_back(lines);
+    while (getline(kullanıcılarTXT, lines, '.')) customers.push_back(lines);
 }
 
 #pragma endregion
