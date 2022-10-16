@@ -5,73 +5,70 @@
 #include <string>
 #include <vector>
 #include <string.h>
-#include <algorithm>
-#include <iterator>
+#include <sstream>
 
-void clear();
-void MainMenu();
-void Reload();
+void temizle();
+void anaMenu();
+void yenile();
 
-class Courier {
-private:
-    int courierNo;
-    bool isBusy;
+#pragma region SINIFLAR
+
+class Zaman {
 public:
-    Courier(int courierNo, bool isBusy) {
-        SetCourierNo(courierNo);
-        SetIsBusy(isBusy);
-    }
-    //getter setter fonksiyonları
-    void SetCourierNo(int courierNo) { this->courierNo = courierNo; }
-    int GetCourierNo() { return courierNo; }
-    void SetIsBusy(bool isBusy) {this->isBusy = isBusy;}
-    bool GetIsBusy() {return isBusy;}
+    int saat;
+    int dakika;
 };
 
-class Member {
+class Kiyafet {
 public:
-    string userName;
-    string password;
-    string eMail;
-    Member() {};
-    Member(string fName, string lName, string password, string eMail) {
-        this->userName = fName + " " + lName;
-        this->password = password;
-        this->eMail = eMail;
-        cout << "Kullanici adiniz: " + this->userName;
-    }
+    char* kategori;
+    int kiyafet_adi;
+    double fiyat;
+    char* boyut;
+    char* renk;
 };
 
-class Manager : public Member {
+class Siparis : public Kiyafet {
 public:
-    void ReadComplaint() {};
-    void AssignCourier() {};
-    void GiveDiscountCode() {};
-    void ShowReceipt() {};
-    Manager(string sifre) {}
+    int siparis_no;
+    double siparis_fiyat;
+    Zaman siparis_baslangic;
+    Zaman siparis_ulasim;
 };
 
-class Customer : public Member {
+class Kisi {
 public:
-    Customer(string username, string sifre) {
-        this->userName = username;
-        this->password = password;
-    }
-    void ShowClothes() {};
-    void ShowOrder() {};
-    void CreateComplaint() {};
-    void ChangePassword() {};
+    char* ad_soyad;
+    char telno;
 };
 
-class Order {
-
+class Kurye : public Kisi{
+public:
+    Zaman* dagitim_bitisler;
+    int* siparis_numaralari;
 };
 
+class Yonetici : public Kisi {
+public:
+    char* sifre;
+    void sikayetOku() {};
+    void kuryeAta() {};
+    void indirimKoduTanimla() {};
+    void faturaGoster() {};
+};
 
-#pragma region functions
+class Kullanici : public Kisi {
+public:
+    void kiyafetGoster() {};
+    void siparisGoster() {};
+    void sikayetOlustur() {};
+    void sifreDegistir() {};
+};
+#pragma endregion
 
-void ManagerMenu(Manager& admin) {
-    clear();
+#pragma region FONKSİYONLAR
+void yoneticiMenu(Yonetici& admin) {
+    temizle();
     int menuNum;
     cout << "1. Urun Girisi\n2. Kurye Atama\n3. Sikayet ve Oneri Okuma\n4. Kullanicilara Indirim Kodu Tanimlama\n5. Siparislerin Faturalarini Goruntule\n";
     cin >> menuNum;
@@ -80,159 +77,158 @@ void ManagerMenu(Manager& admin) {
     case 1:
         break;
     case 2:
-        admin.AssignCourier();
+        admin.kuryeAta();
     case 3:
-        admin.ReadComplaint();
+        admin.sikayetOku();
     case 4:
-        admin.GiveDiscountCode();
+        admin.indirimKoduTanimla();
     case 5:
-        admin.ShowReceipt();
+        admin.faturaGoster();
     default:
         break;
     }
 }
 
-void ManagerLogInMenu() {
-    string password;
-    string managerPassword;
+void yoneticiGirisMenu() {
+    string sifre;
+    string yoneticiSifre;
     int menuNum;
-    clear();
+    temizle();
     cout << "Sifre:";
-    cin >> password;
+    cin >> sifre;
     ifstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.txt");
-    getline(kullanıcılarTXT, managerPassword);
-    Manager manager1(password);
-    if (managerPassword == password) ManagerMenu(manager1);
-    else ManagerLogInMenu();
-    
+    getline(kullanıcılarTXT, yoneticiSifre);    
 }
 
-void CustomerLogInMenu() {
-    string userName;
-    string password;
-    string control;
+void kullaniciGirisMenu() {
+    string kullaniciAdi;
+    string sifre;
+    string kontrol;
     int menuNum;
-    string line;
-    bool isTrue = true;
-    int customerNo;
-    vector<string> customers;
-    clear();
+    string satir;
+    vector<string> kullanicilar;
+    temizle();
+
     cout << "Kullanici Adi: ";
-    cin >> userName;
+    cin >> kullaniciAdi;
     cout << "\nSifre: ";
-    cin >> password;
-    control = userName + ":" + password + " ";
+    cin >> sifre;
+    kontrol = kullaniciAdi + ":" + sifre;
 
     ifstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, line, '.')) customers.push_back(line);
-
-        for (int i = 0; i < customers.size(); i++)
-        {
-            if (control == customers[i]) {
-                cout << "oldu amk";
-            }
-            else {
-                cout << "olmadı amk";
-            }
-            
+    while (getline(kullanıcılarTXT, satir)) {
+        stringstream ss(satir);
+        while (getline(ss, satir, '.')) {
+            kullanicilar.push_back(satir);
         }
-    
-
-    /*auto it = find(begin(customers), end(customers), control);
-    if (it != end(customers)) {
-        cout << "basarili";
     }
-    else
+
+    for (int i = 0; i < kullanicilar.size(); i++)
     {
-        cout << "olmadi aga";
-    }*/
-
-
+        if (kontrol == kullanicilar[i]) {
+            cout << "basarili";
+            break;
+        }
+        else {
+            cout << "basarisiz";
+        }
+    }
 }
 
-void clear() {
+void temizle() {
     cout << "\x1B[2J\x1B[H";
 }
 
-void LogInMenu() {
+void girisMenu() {
     int menuNum;
-    clear();
+    temizle();
     cout << "1. Yonetici Giris\n2. Musteri Giris\n3. Geri\n";
     cin >> menuNum;
     switch (menuNum)
     {
     case 1:
-        ManagerLogInMenu();
+        yoneticiGirisMenu();
         break;
     case 2:
-        CustomerLogInMenu();
+        kullaniciGirisMenu();
         break;
     case 3:
-        MainMenu();
+        anaMenu();
     default:
         break;
     }
 }
 
-void CustomerSignUp() {
-    string password;
+void kullaniciUyeKayit() {
+    string sifre;
     string eMail;
-    string username;
-    string lines;
+    string kullaniciAdi;
+    string satirlar;
     int menuNo;
     bool gecis = true;
-    vector<string> customers;
-    clear();
+    vector<string> kullanicilar;
+    temizle();
+
     cout << "Kullanici Adi: ";
-    cin >> username;
+    cin >> kullaniciAdi;
     cout << "\nSifre: ";
-    cin >> password;
+    cin >> sifre;
     cout << "\nE-Mail: ";
     cin >> eMail;
+
     ofstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
-    kullanıcılarTXT << username + ":" + password + "." + eMail + "." << endl;
+    kullanıcılarTXT << kullaniciAdi + ":" + sifre + "." + eMail + "." << endl;
     kullanıcılarTXT.close();
+
     while (gecis == true) {
-        cout << "\nBasariyla kaydoldunuz. Geri gelmek için lütfen 5'e basiniz.";
+        cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.";
         cin >> menuNo;
         if (menuNo == 5) {
             gecis = false;
-            MainMenu();
+            anaMenu();
         }
     }
 
 }
 
-void MainMenu() {
+void anaMenu() {
     int menuNum;
     cout << "1. Giris\n2. Uye Kaydi\n3. Cikis\n";
     cin >> menuNum;
     switch (menuNum) {
     case 1:
-        LogInMenu();
+        girisMenu();
         break;
     case 2:
-        CustomerSignUp();
+        kullaniciUyeKayit();
         break;
     default:
         break;
     }
 }
 
-void Reload() {
-    string lines;
+void yenile() {
+    string line;
     int customerNo;
     vector<string> customers;
-    fstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, lines, '.')) customers.push_back(lines);
-}
 
+    ifstream kullanıcılarTXT;
+    kullanıcılarTXT.open("kullanıcılar.txt");
+    while (getline(kullanıcılarTXT, line)) {
+        stringstream ss(line);
+        while (getline(ss, line, '.')) {
+            customers.push_back(line);
+        }
+    }
+    kullanıcılarTXT.close();
+}
 #pragma endregion
-int main()
+
+int main()  
 {
-    MainMenu();
+    yenile();
+    anaMenu();
 }
