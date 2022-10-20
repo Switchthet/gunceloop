@@ -7,9 +7,12 @@
 #include <string.h>
 #include <sstream>
 
+Kullanici kullanicim;
+
 void temizle();
 void anaMenu();
 void yenile();
+void kullaniciGirisMenu();
 
 #pragma region SINIFLAR
 
@@ -65,6 +68,7 @@ public:
     string sifre;
     char* indirim_kodu;
     char* dtarihi;
+    Kullanici() {};
     Kullanici(string kullanici_adi, string sifre) {
         this->kullanici_adi = kullanici_adi;
         this->sifre = sifre;
@@ -108,15 +112,15 @@ void Kullanici::kullaniciMenu() {
     switch (menuNum)
     {
     case 1:
-        kiyafetGoster();
+        kullanicim.kiyafetGoster();
     case 2:
-        siparisGoster();
+        kullanicim.siparisGoster();
     case 3:
-        sikayetOlustur();
+        kullanicim.sikayetOlustur();
     case 4:
-        sifreDegistir();
+        kullanicim.sifreDegistir();
     case 5:
-        break;
+        kullanicim.kullaniciGirisMenu();
     default:
         break;
     }
@@ -132,10 +136,11 @@ void Kullanici::sikayetOlustur() {
     bool gecis = true;
     int menuNo;
     öneriTXT.open("öneri.TXT");
+    cout << "\noneri yaziniz: " << endl;
     cin >> öneri;
     öneriTXT << öneri << endl;
     öneriTXT.close();
-
+    kullaniciMenu();
 };
 
 void Kullanici::sifreDegistir() {};
@@ -175,7 +180,8 @@ void kullaniciGirisMenu() {
             cout << "basarili" << endl;
             string objeNo = to_string(i);
             Kullanici i(kullaniciAdi, sifre);
-            i.kullaniciMenu();
+            kullanicim = i;
+            kullanicim.kullaniciMenu();
             break;
         }
     }
