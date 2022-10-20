@@ -116,11 +116,13 @@ void Kullanici::kullaniciMenu() {
     case 4:
         sifreDegistir();
     case 5:
-        kullaniciGirisMenu();
+        break;
     default:
         break;
     }
 }
+
+void Kullanici::kiyafetGoster() {};
 
 void Kullanici::siparisGoster() {};
 
@@ -129,16 +131,19 @@ void Kullanici::sikayetOlustur() {
     string öneri;
     bool gecis = true;
     int menuNo;
-    öneriTXT.open("öneri.TXT", ios_base::app);
+    öneriTXT.open("öneri.TXT");
+    cin >> öneri;
     öneriTXT << öneri << endl;
     öneriTXT.close();
 
 };
 
 void Kullanici::sifreDegistir() {};
+
 void yoneticiGirisMenu() {
     int a = 5;
 }
+
 void kullaniciGirisMenu() {
     string kullaniciAdi;
     string sifre;
@@ -175,9 +180,11 @@ void kullaniciGirisMenu() {
         }
     }
 }
+
 void temizle() {
     cout << "\x1B[2J\x1B[H";
 }
+
 void girisMenu() {
     int menuNum;
     temizle();
@@ -197,6 +204,7 @@ void girisMenu() {
         break;
     }
 }
+
 void kullaniciUyeKayit() {
     string sifre;
     string eMail;
@@ -206,18 +214,18 @@ void kullaniciUyeKayit() {
     bool gecis = true;
     vector<string> kullanicilar;
     temizle();
+
     cout << "Kullanici Adi: ";
     cin >> kullaniciAdi;
     cout << "\nSifre: ";
     cin >> sifre;
     cout << "\nE-Mail: ";
     cin >> eMail;
+
     ofstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
     kullanıcılarTXT << kullaniciAdi + ":" + sifre + "." + eMail + "." << endl;
     kullanıcılarTXT.close();
-
-    
 
     while (gecis == true) {
         cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.";

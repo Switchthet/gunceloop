@@ -1,3 +1,5 @@
 ﻿  OOP Project.cpp
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(119,9): error C3861: 'kullaniciGirisMenu': tanımlayıcı bulunamadı
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(167,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(133,9): warning C4101: 'menuNo': yerel değişken başvurusu kaldırıldı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(172,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(151,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
+  OOP Project.vcxproj -> C:\Users\kutay\Documents\GitHub\gunceloop\Debug\OOP Project.exe
