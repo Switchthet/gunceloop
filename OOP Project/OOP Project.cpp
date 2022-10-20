@@ -59,54 +59,93 @@ public:
 
 class Kullanici : public Kisi {
 public:
-    void kiyafetGoster() {};
-    void siparisGoster() {};
-    void sikayetOlustur() {};
-    void sifreDegistir() {};
+    string kullanici_adi;
+    char* eposta;
+    char* adres_ilce;
+    string sifre;
+    char* indirim_kodu;
+    char* dtarihi;
+    Kullanici(string kullanici_adi, string sifre) {
+        this->kullanici_adi = kullanici_adi;
+        this->sifre = sifre;
+    }
+    void kiyafetGoster();
+    void siparisGoster();
+    void sikayetOlustur();
+    void sifreDegistir();
+    void kullaniciMenu();
 };
 #pragma endregion
 
 #pragma region FONKSİYONLAR
-void yoneticiMenu(Yonetici& admin) {
+//void yoneticiMenu() {
+//    temizle();
+//    int menuNum;
+//    cout << "1. Urun Girisi\n2. Kurye Atama\n3. Sikayet ve Oneri Okuma\n4. Kullanicilara Indirim Kodu Tanimlama\n5. Siparislerin Faturalarini Goruntule\n";
+//    cin >> menuNum;
+//    switch (menuNum)
+//    {
+//    case 1:
+//        break;
+//    case 2:
+//        kuryeAta();
+//    case 3:
+//        admin.sikayetOku();
+//    case 4:
+//        admin.indirimKoduTanimla();
+//    case 5:
+//        admin.faturaGoster();
+//    default:
+//        break;
+//    }
+//}
+
+void Kullanici::kullaniciMenu() {
     temizle();
     int menuNum;
-    cout << "1. Urun Girisi\n2. Kurye Atama\n3. Sikayet ve Oneri Okuma\n4. Kullanicilara Indirim Kodu Tanimlama\n5. Siparislerin Faturalarini Goruntule\n";
+    cout << "1. Kiyafet Kategorilerini Goster ve Urun Sec\n2. Siparis Takip\n3. Sikayet ve Oneri Olustur\n4. Sifre Degistir\n5. Geri Don\n";
     cin >> menuNum;
     switch (menuNum)
     {
     case 1:
-        break;
+        kiyafetGoster();
     case 2:
-        admin.kuryeAta();
+        siparisGoster();
     case 3:
-        admin.sikayetOku();
+        sikayetOlustur();
     case 4:
-        admin.indirimKoduTanimla();
+        sifreDegistir();
     case 5:
-        admin.faturaGoster();
+        kullaniciGirisMenu();
     default:
         break;
     }
 }
 
-void yoneticiGirisMenu() {
-    string sifre;
-    string yoneticiSifre;
-    int menuNum;
-    temizle();
-    cout << "Sifre:";
-    cin >> sifre;
-    ifstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.txt");
-    getline(kullanıcılarTXT, yoneticiSifre);    
-}
+void Kullanici::siparisGoster() {};
 
+void Kullanici::sikayetOlustur() {
+    ofstream öneriTXT;
+    string öneri;
+    bool gecis = true;
+    int menuNo;
+    öneriTXT.open("öneri.TXT", ios_base::app);
+    öneriTXT << öneri << endl;
+    öneriTXT.close();
+
+};
+
+void Kullanici::sifreDegistir() {};
+void yoneticiGirisMenu() {
+    int a = 5;
+}
 void kullaniciGirisMenu() {
     string kullaniciAdi;
     string sifre;
     string kontrol;
     int menuNum;
     string satir;
+    string objeNo;
     vector<string> kullanicilar;
     temizle();
 
@@ -128,19 +167,17 @@ void kullaniciGirisMenu() {
     for (int i = 0; i < kullanicilar.size(); i++)
     {
         if (kontrol == kullanicilar[i]) {
-            cout << "basarili";
+            cout << "basarili" << endl;
+            string objeNo = to_string(i);
+            Kullanici i(kullaniciAdi, sifre);
+            i.kullaniciMenu();
             break;
-        }
-        else {
-            cout << "basarisiz";
         }
     }
 }
-
 void temizle() {
     cout << "\x1B[2J\x1B[H";
 }
-
 void girisMenu() {
     int menuNum;
     temizle();
@@ -160,7 +197,6 @@ void girisMenu() {
         break;
     }
 }
-
 void kullaniciUyeKayit() {
     string sifre;
     string eMail;
@@ -170,18 +206,18 @@ void kullaniciUyeKayit() {
     bool gecis = true;
     vector<string> kullanicilar;
     temizle();
-
     cout << "Kullanici Adi: ";
     cin >> kullaniciAdi;
     cout << "\nSifre: ";
     cin >> sifre;
     cout << "\nE-Mail: ";
     cin >> eMail;
-
     ofstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
     kullanıcılarTXT << kullaniciAdi + ":" + sifre + "." + eMail + "." << endl;
     kullanıcılarTXT.close();
+
+    
 
     while (gecis == true) {
         cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.";
@@ -195,6 +231,7 @@ void kullaniciUyeKayit() {
 }
 
 void anaMenu() {
+    yenile();
     int menuNum;
     cout << "1. Giris\n2. Uye Kaydi\n3. Cikis\n";
     cin >> menuNum;
@@ -212,7 +249,6 @@ void anaMenu() {
 
 void yenile() {
     string line;
-    int customerNo;
     vector<string> customers;
 
     ifstream kullanıcılarTXT;
@@ -229,6 +265,5 @@ void yenile() {
 
 int main()  
 {
-    yenile();
     anaMenu();
 }
