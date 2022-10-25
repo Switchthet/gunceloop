@@ -1,5 +1,6 @@
 ﻿  OOP Project.cpp
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(134,9): warning C4101: 'menuNo': yerel değişken başvurusu kaldırıldı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(162,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(165,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
 C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(174,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(153,9): warning C4101: 'menuNum': yerel değişken başvurusu kaldırıldı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(204,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
   OOP Project.vcxproj -> C:\Users\kutay\Documents\GitHub\gunceloop\Debug\OOP Project.exe

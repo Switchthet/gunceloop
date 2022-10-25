@@ -7,8 +7,6 @@
 #include <string.h>
 #include <sstream>
 
-Kullanici kullanicim;
-
 void temizle();
 void anaMenu();
 void yenile();
@@ -68,7 +66,7 @@ public:
     string sifre;
     char* indirim_kodu;
     char* dtarihi;
-    Kullanici() {};
+    Kullanici();
     Kullanici(string kullanici_adi, string sifre) {
         this->kullanici_adi = kullanici_adi;
         this->sifre = sifre;
@@ -80,6 +78,8 @@ public:
     void kullaniciMenu();
 };
 #pragma endregion
+
+Kullanici kullanicim("","");
 
 #pragma region FONKSİYONLAR
 //void yoneticiMenu() {
@@ -120,7 +120,7 @@ void Kullanici::kullaniciMenu() {
     case 4:
         kullanicim.sifreDegistir();
     case 5:
-        kullanicim.kullaniciGirisMenu();
+        kullaniciGirisMenu();
     default:
         break;
     }
@@ -134,8 +134,7 @@ void Kullanici::sikayetOlustur() {
     ofstream öneriTXT;
     string öneri;
     bool gecis = true;
-    int menuNo;
-    öneriTXT.open("öneri.TXT");
+    öneriTXT.open("öneri.TXT",ios_base::app);
     cout << "\noneri yaziniz: " << endl;
     cin >> öneri;
     öneriTXT << öneri << endl;
@@ -143,7 +142,41 @@ void Kullanici::sikayetOlustur() {
     kullaniciMenu();
 };
 
-void Kullanici::sifreDegistir() {};
+void Kullanici::sifreDegistir() {
+    string yeniSifre;
+    string eskiSifre;
+    string satir;
+    string kontrol;
+    cout << "Eski sifrenizi giriniz: ";
+    cin >> eskiSifre;
+    cout << "\nYeni sifrenizi giriniz: ";
+    cin >> yeniSifre;
+    kontrol = kullanicim.kullanici_adi + "." + kullanicim.sifre;
+    vector<string> kullanicilar;
+
+    ifstream kullanıcılarTXTokuma;
+    kullanıcılarTXTokuma.open("kullanıcılar.txt");
+    while (getline(kullanıcılarTXTokuma, satir)) kullanicilar.push_back(satir);
+    kullanıcılarTXTokuma.close();
+
+    for (int i = 0; i < kullanicilar.size(); i++)
+    {
+        if (kontrol == kullanicilar[i]) {
+            kullanicim.sifre == yeniSifre;
+            kullanicilar[i] = kullanicim.kullanici_adi + "." + yeniSifre;
+            kullanicilar[i + 2] = yeniSifre;
+        }
+    }
+    
+
+    ofstream kullanıcılarTXTyazma;
+    kullanıcılarTXTyazma.open("kullanıcılar.txt", ios::trunc);
+    for (int a = 0; a < kullanicilar.size(); a++)
+    {
+        kullanıcılarTXTyazma << kullanicilar[a] << endl;
+    }
+    kullanıcılarTXTyazma.close();
+};
 
 void yoneticiGirisMenu() {
     int a = 5;
@@ -153,7 +186,6 @@ void kullaniciGirisMenu() {
     string kullaniciAdi;
     string sifre;
     string kontrol;
-    int menuNum;
     string satir;
     string objeNo;
     vector<string> kullanicilar;
@@ -163,19 +195,15 @@ void kullaniciGirisMenu() {
     cin >> kullaniciAdi;
     cout << "\nSifre: ";
     cin >> sifre;
-    kontrol = kullaniciAdi + ":" + sifre;
+    kontrol = kullaniciAdi + "." + sifre;
 
     ifstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, satir)) {
-        stringstream ss(satir);
-        while (getline(ss, satir, '.')) {
-            kullanicilar.push_back(satir);
-        }
-    }
+    while (getline(kullanıcılarTXT, satir)) kullanicilar.push_back(satir);
 
     for (int i = 0; i < kullanicilar.size(); i++)
     {
+        cout << kullanicilar[i] << endl;
         if (kontrol == kullanicilar[i]) {
             cout << "basarili" << endl;
             string objeNo = to_string(i);
@@ -230,7 +258,10 @@ void kullaniciUyeKayit() {
 
     ofstream kullanıcılarTXT;
     kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
-    kullanıcılarTXT << kullaniciAdi + ":" + sifre + "." + eMail + "." << endl;
+    kullanıcılarTXT << kullaniciAdi + "." + sifre << endl;
+    kullanıcılarTXT << kullaniciAdi << endl;
+    kullanıcılarTXT << sifre << endl;
+    kullanıcılarTXT << eMail << endl;
     kullanıcılarTXT.close();
 
     while (gecis == true) {
