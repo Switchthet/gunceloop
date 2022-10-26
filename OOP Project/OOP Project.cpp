@@ -7,10 +7,12 @@
 #include <string.h>
 #include <sstream>
 
+
 void temizle();
 void anaMenu();
 void yenile();
 void kullaniciGirisMenu();
+void yoneticiGirisMenu();
 
 #pragma region SINIFLAR
 
@@ -51,11 +53,16 @@ public:
 
 class Yonetici : public Kisi {
 public:
-    char* sifre;
-    void sikayetOku() {};
-    void kuryeAta() {};
-    void indirimKoduTanimla() {};
-    void faturaGoster() {};
+    string sifre;
+    Yonetici(string a) {
+        this->sifre = a;
+    }
+    void urunGirisi();
+    void sikayetOku() ;
+    void kuryeAta();
+    void indirimKoduTanimla();
+    void faturaGoster();
+    void yoneticiMenu();
 };
 
 class Kullanici : public Kisi {
@@ -79,30 +86,79 @@ public:
 };
 #pragma endregion
 
-Kullanici kullanicim("","");
+Kullanici kullanicim("default", "default");
+Yonetici yoneticim("sifre");
 
 #pragma region FONKSİYONLAR
-//void yoneticiMenu() {
-//    temizle();
-//    int menuNum;
-//    cout << "1. Urun Girisi\n2. Kurye Atama\n3. Sikayet ve Oneri Okuma\n4. Kullanicilara Indirim Kodu Tanimlama\n5. Siparislerin Faturalarini Goruntule\n";
-//    cin >> menuNum;
-//    switch (menuNum)
-//    {
-//    case 1:
-//        break;
-//    case 2:
-//        kuryeAta();
-//    case 3:
-//        admin.sikayetOku();
-//    case 4:
-//        admin.indirimKoduTanimla();
-//    case 5:
-//        admin.faturaGoster();
-//    default:
-//        break;
-//    }
-//}
+
+#pragma region YONETICI FONKSIYONLARI
+void Yonetici::yoneticiMenu() {
+    temizle();
+    int menuNum;
+    cout << "1. Urun Girisi\n2. Kurye Atama\n3. Sikayet ve Oneri Okuma\n4. Kullanicilara Indirim Kodu Tanimlama\n5. Siparislerin Faturalarini Goruntule\n6. Geri Don";
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        yoneticim.urunGirisi();
+        break;
+    case 2:
+        yoneticim.kuryeAta();
+        break;
+    case 3:
+        yoneticim.sikayetOku();
+        break;
+    case 4:
+        yoneticim.indirimKoduTanimla();
+        break;
+    case 5:
+        yoneticim.faturaGoster();
+        break;
+    case 6:
+        yoneticiGirisMenu();
+        break;
+    default:
+        yoneticim.yoneticiMenu();
+        break;
+    }
+}
+
+void Yonetici::urunGirisi() {};
+
+void Yonetici::sikayetOku() {
+    temizle();
+    string satir;
+    int menuNum;
+    bool gecis = true;
+    vector <string> oneriler;
+    ifstream oneriTXT;
+    oneriTXT.open("öneri.TXT");
+    while (getline(oneriTXT, satir)) oneriler.push_back(satir);
+    for (int i = 0; i < oneriler.size(); i++)
+    {
+        cout << oneriler[i] << endl;
+    }
+
+    while (gecis) {
+        cout << "Geri gelmek icin lutfen 5'e basiniz.";
+        cin.ignore();
+        cin >> menuNum;
+        if (menuNum == 5) {
+            gecis = false;
+            yoneticim.yoneticiMenu();
+        }
+    }
+
+};
+
+void Yonetici::kuryeAta() {};
+
+void Yonetici::indirimKoduTanimla() {};
+
+void Yonetici::faturaGoster() {};
+#pragma endregion
+
+#pragma region KULLANICI FONKSIYONLARI
 
 void Kullanici::kullaniciMenu() {
     temizle();
@@ -113,14 +169,19 @@ void Kullanici::kullaniciMenu() {
     {
     case 1:
         kullanicim.kiyafetGoster();
+        break;
     case 2:
         kullanicim.siparisGoster();
+        break;
     case 3:
         kullanicim.sikayetOlustur();
+        break;
     case 4:
         kullanicim.sifreDegistir();
+        break;
     case 5:
         kullaniciGirisMenu();
+        break;
     default:
         break;
     }
@@ -131,15 +192,19 @@ void Kullanici::kiyafetGoster() {};
 void Kullanici::siparisGoster() {};
 
 void Kullanici::sikayetOlustur() {
+    temizle();
+    cin.ignore();
+    cout << "Onerinizi yaziniz: " << endl;
+    string oneri;
+    getline(cin, oneri);
+    
+
     ofstream öneriTXT;
-    string öneri;
-    bool gecis = true;
-    öneriTXT.open("öneri.TXT",ios_base::app);
-    cout << "\noneri yaziniz: " << endl;
-    cin >> öneri;
-    öneriTXT << öneri << endl;
+    öneriTXT.open("öneri.TXT");
+    öneriTXT << oneri << endl;
     öneriTXT.close();
-    kullaniciMenu();
+
+    kullanicim.kullaniciMenu();
 };
 
 void Kullanici::sifreDegistir() {
@@ -154,10 +219,10 @@ void Kullanici::sifreDegistir() {
     kontrol = kullanicim.kullanici_adi + "." + kullanicim.sifre;
     vector<string> kullanicilar;
 
-    ifstream kullanıcılarTXTokuma;
-    kullanıcılarTXTokuma.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXTokuma, satir)) kullanicilar.push_back(satir);
-    kullanıcılarTXTokuma.close();
+    ifstream kullanicilarTXTokuma;
+    kullanicilarTXTokuma.open("kullanıcılar.txt");
+    while (getline(kullanicilarTXTokuma, satir)) kullanicilar.push_back(satir);
+    kullanicilarTXTokuma.close();
 
     for (int i = 0; i < kullanicilar.size(); i++)
     {
@@ -169,17 +234,41 @@ void Kullanici::sifreDegistir() {
     }
     
 
-    ofstream kullanıcılarTXTyazma;
-    kullanıcılarTXTyazma.open("kullanıcılar.txt", ios::trunc);
+    ofstream kullanicilarTXTyazma;
+    kullanicilarTXTyazma.open("kullanıcılar.txt", ios::trunc);
     for (int a = 0; a < kullanicilar.size(); a++)
     {
-        kullanıcılarTXTyazma << kullanicilar[a] << endl;
+        kullanicilarTXTyazma << kullanicilar[a] << endl;
     }
-    kullanıcılarTXTyazma.close();
+    kullanicilarTXTyazma.close();
+    cout << "calistim";
 };
 
+#pragma endregion
+
+#pragma region GIRIS FONKSIYONLARI
+
 void yoneticiGirisMenu() {
-    int a = 5;
+    string sifre;
+    string kontrol;
+    string satir;
+    vector<string> kullanicilar;
+    temizle();
+
+    cout << "Sifre: ";
+    cin >> sifre;
+    kontrol = "yonetici." + sifre;
+
+    ifstream kullanicilarTXT;
+    kullanicilarTXT.open("kullanıcılar.txt");
+    while (getline(kullanicilarTXT, satir)) kullanicilar.push_back(satir);
+
+    for (int i = 0; i < kullanicilar.size(); i++)
+    {
+        if (kontrol == kullanicilar[i]) {
+            yoneticim.yoneticiMenu();
+        }
+    }
 }
 
 void kullaniciGirisMenu() {
@@ -187,7 +276,7 @@ void kullaniciGirisMenu() {
     string sifre;
     string kontrol;
     string satir;
-    string objeNo;
+    string objeAdi;
     vector<string> kullanicilar;
     temizle();
 
@@ -197,26 +286,23 @@ void kullaniciGirisMenu() {
     cin >> sifre;
     kontrol = kullaniciAdi + "." + sifre;
 
-    ifstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, satir)) kullanicilar.push_back(satir);
+    ifstream kullanicilarTXT;
+    kullanicilarTXT.open("kullanıcılar.txt");
+    while (getline(kullanicilarTXT, satir)) kullanicilar.push_back(satir);
 
     for (int i = 0; i < kullanicilar.size(); i++)
     {
         cout << kullanicilar[i] << endl;
         if (kontrol == kullanicilar[i]) {
             cout << "basarili" << endl;
-            string objeNo = to_string(i);
-            Kullanici i(kullaniciAdi, sifre);
-            kullanicim = i;
+            //string objeNo = to_string(i);
+            objeAdi = kullaniciAdi;
+            Kullanici objeAdi(kullaniciAdi, sifre);
+            kullanicim = objeAdi;
             kullanicim.kullaniciMenu();
             break;
         }
     }
-}
-
-void temizle() {
-    cout << "\x1B[2J\x1B[H";
 }
 
 void girisMenu() {
@@ -239,6 +325,12 @@ void girisMenu() {
     }
 }
 
+#pragma endregion
+
+void temizle() {
+    cout << "\x1B[2J\x1B[H";
+}
+
 void kullaniciUyeKayit() {
     string sifre;
     string eMail;
@@ -256,16 +348,17 @@ void kullaniciUyeKayit() {
     cout << "\nE-Mail: ";
     cin >> eMail;
 
-    ofstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.TXT",ios_base::app);
-    kullanıcılarTXT << kullaniciAdi + "." + sifre << endl;
-    kullanıcılarTXT << kullaniciAdi << endl;
-    kullanıcılarTXT << sifre << endl;
-    kullanıcılarTXT << eMail << endl;
-    kullanıcılarTXT.close();
+    ofstream kullanicilarTXT;
+    kullanicilarTXT.open("kullanıcılar.TXT",ios_base::app);
+    kullanicilarTXT << kullaniciAdi + "." + sifre << endl;
+    kullanicilarTXT << kullaniciAdi << endl;
+    kullanicilarTXT << sifre << endl;
+    kullanicilarTXT << eMail << endl;
+    kullanicilarTXT.close();
 
-    while (gecis == true) {
+    while (gecis) {
         cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.";
+        cin.ignore();
         cin >> menuNo;
         if (menuNo == 5) {
             gecis = false;
@@ -276,7 +369,7 @@ void kullaniciUyeKayit() {
 }
 
 void anaMenu() {
-    yenile();
+    temizle();
     int menuNum;
     cout << "1. Giris\n2. Uye Kaydi\n3. Cikis\n";
     cin >> menuNum;
@@ -290,21 +383,6 @@ void anaMenu() {
     default:
         break;
     }
-}
-
-void yenile() {
-    string line;
-    vector<string> customers;
-
-    ifstream kullanıcılarTXT;
-    kullanıcılarTXT.open("kullanıcılar.txt");
-    while (getline(kullanıcılarTXT, line)) {
-        stringstream ss(line);
-        while (getline(ss, line, '.')) {
-            customers.push_back(line);
-        }
-    }
-    kullanıcılarTXT.close();
 }
 #pragma endregion
 
