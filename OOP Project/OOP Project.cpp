@@ -7,6 +7,8 @@
 #include <string.h>
 #include <sstream>
 
+Kullanici kullanicim("default", "default");
+Yonetici yoneticim("a");
 
 void temizle();
 void anaMenu();
@@ -24,11 +26,11 @@ public:
 
 class Kiyafet {
 public:
-    char* kategori;
+    string kategori;
     int kiyafet_adi;
     double fiyat;
-    char* boyut;
-    char* renk;
+    string boyut;
+    string renk;
 };
 
 class Siparis : public Kiyafet {
@@ -58,6 +60,12 @@ public:
         this->sifre = a;
     }
     void urunGirisi();
+    void elbiseGirisi();
+    void tisortGirisi();
+    void pantolonGirisi();
+    void gomlekGirisi();
+    void etekGirisi();
+    void ayakkabiGirisi();
     void sikayetOku() ;
     void kuryeAta();
     void indirimKoduTanimla();
@@ -86,11 +94,7 @@ public:
 };
 #pragma endregion
 
-Kullanici kullanicim("default", "default");
-Yonetici yoneticim("sifre");
-
 #pragma region FONKSİYONLAR
-
 #pragma region YONETICI FONKSIYONLARI
 void Yonetici::yoneticiMenu() {
     temizle();
@@ -123,7 +127,45 @@ void Yonetici::yoneticiMenu() {
     }
 }
 
-void Yonetici::urunGirisi() {};
+void Yonetici::elbiseGirisi() {
+    temizle();
+    cin.ignore();
+    string boyut;
+    string renk;
+    string kategori;
+    int kiyafetAdi;
+    double fiyat;
+
+    ofstream elbiseTXT;
+    elbiseTXT.open("elbise.TXT");
+}
+
+
+
+void Yonetici::urunGirisi() {
+    int menuNo;
+    cout << "1. Elbise Ekle\n2. Tisört Ekle\n3. Pantolon Ekle\n4. Gömlek Ekle\n5. Etek Ekle\6. Ayakkabi Ekle";
+    cin >> menuNo;
+
+    switch (menuNo) {
+    case 1:
+        yoneticim.elbiseGirisi();
+        break;
+    case 2:
+        
+        break;
+    case 3:
+
+    case 4:
+
+    case 5:
+
+    case 6:
+
+    default:
+        break;
+   }
+};
 
 void Yonetici::sikayetOku() {
     temizle();
@@ -241,7 +283,6 @@ void Kullanici::sifreDegistir() {
         kullanicilarTXTyazma << kullanicilar[a] << endl;
     }
     kullanicilarTXTyazma.close();
-    cout << "calistim";
 };
 
 #pragma endregion
@@ -338,7 +379,6 @@ void kullaniciUyeKayit() {
     string satirlar;
     int menuNo;
     bool gecis = true;
-    vector<string> kullanicilar;
     temizle();
 
     cout << "Kullanici Adi: ";

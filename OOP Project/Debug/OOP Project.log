@@ -1,8 +1,8 @@
 ﻿  OOP Project.cpp
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(137,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(227,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(230,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(239,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(266,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(293,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(139,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(229,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(232,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(241,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(268,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(295,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
   OOP Project.vcxproj -> C:\Users\kutay\Documents\GitHub\gunceloop\Debug\OOP Project.exe
