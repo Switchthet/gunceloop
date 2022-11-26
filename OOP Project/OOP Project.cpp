@@ -12,7 +12,6 @@ Yonetici yoneticim("a");
 
 void temizle();
 void anaMenu();
-void yenile();
 void kullaniciGirisMenu();
 void yoneticiGirisMenu();
 
@@ -140,7 +139,19 @@ void Yonetici::elbiseGirisi() {
     elbiseTXT.open("elbise.TXT");
 }
 
+void Yonetici::tisortGirisi() {};
 
+
+void Yonetici::pantolonGirisi() {};
+
+
+void Yonetici::gomlekGirisi() {};
+
+
+void Yonetici::etekGirisi() {};
+
+
+void Yonetici::ayakkabiGirisi() {};
 
 void Yonetici::urunGirisi() {
     int menuNo;
@@ -152,10 +163,10 @@ void Yonetici::urunGirisi() {
         yoneticim.elbiseGirisi();
         break;
     case 2:
-        
+        yoneticim.tisortGirisi();
         break;
     case 3:
-
+        yoneticim.pantolonGirisi();
     case 4:
 
     case 5:
