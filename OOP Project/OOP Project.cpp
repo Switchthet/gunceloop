@@ -6,9 +6,8 @@
 #include <vector>
 #include <string.h>
 #include <sstream>
-
-Kullanici kullanicim("default", "default");
-Yonetici yoneticim("a");
+#include <regex>
+#include <conio.h>
 
 void temizle();
 void anaMenu();
@@ -16,7 +15,6 @@ void kullaniciGirisMenu();
 void yoneticiGirisMenu();
 
 #pragma region SINIFLAR
-
 class Zaman {
 public:
     int saat;
@@ -65,7 +63,7 @@ public:
     void gomlekGirisi();
     void etekGirisi();
     void ayakkabiGirisi();
-    void sikayetOku() ;
+    void sikayetOku();
     void kuryeAta();
     void indirimKoduTanimla();
     void faturaGoster();
@@ -80,7 +78,6 @@ public:
     string sifre;
     char* indirim_kodu;
     char* dtarihi;
-    Kullanici();
     Kullanici(string kullanici_adi, string sifre) {
         this->kullanici_adi = kullanici_adi;
         this->sifre = sifre;
@@ -91,6 +88,10 @@ public:
     void sifreDegistir();
     void kullaniciMenu();
 };
+
+Kullanici kullanicim("asdasd", "asdasda");
+Yonetici yoneticim("a");
+
 #pragma endregion
 
 #pragma region FONKSİYONLAR
@@ -136,26 +137,22 @@ void Yonetici::elbiseGirisi() {
     double fiyat;
 
     ofstream elbiseTXT;
-    elbiseTXT.open("elbise.TXT");
+    elbiseTXT.open("elbise.TXT", ios_base::app);
 }
 
 void Yonetici::tisortGirisi() {};
 
-
 void Yonetici::pantolonGirisi() {};
-
 
 void Yonetici::gomlekGirisi() {};
 
-
 void Yonetici::etekGirisi() {};
-
 
 void Yonetici::ayakkabiGirisi() {};
 
 void Yonetici::urunGirisi() {
     int menuNo;
-    cout << "1. Elbise Ekle\n2. Tisört Ekle\n3. Pantolon Ekle\n4. Gömlek Ekle\n5. Etek Ekle\6. Ayakkabi Ekle";
+    cout << "1. Elbise Ekle\n2. TisOrt Ekle\n3. Pantolon Ekle\n4. GOmlek Ekle\n5. Etek Ekle\6. Ayakkabi Ekle";
     cin >> menuNo;
 
     switch (menuNo) {
@@ -167,12 +164,16 @@ void Yonetici::urunGirisi() {
         break;
     case 3:
         yoneticim.pantolonGirisi();
+        break;
     case 4:
-
+        yoneticim.gomlekGirisi();
+        break;
     case 5:
-
+        yoneticim.etekGirisi();
+        break;
     case 6:
-
+        yoneticim.ayakkabiGirisi();
+        break;
     default:
         break;
    }
@@ -298,7 +299,7 @@ void Kullanici::sifreDegistir() {
 
 #pragma endregion
 
-#pragma region GIRIS FONKSIYONLARI
+#pragma region GIRIS VE KAYIT FONKSIYONLARI
 
 void yoneticiGirisMenu() {
     string sifre;
@@ -334,8 +335,28 @@ void kullaniciGirisMenu() {
 
     cout << "Kullanici Adi: ";
     cin >> kullaniciAdi;
+
     cout << "\nSifre: ";
-    cin >> sifre;
+    char karakter = _getch();
+    while (karakter != '\r')
+    {
+        if (karakter == '\b')
+        {
+            if (sifre.length() > 0)
+            {
+                sifre.erase(sifre.length() - 1);
+                _putch('\b');
+                _putch(' ');
+                _putch('\b');
+            }
+        }
+        else {
+            sifre += karakter;
+            _putch('*');
+        }
+        karakter = _getch();
+    }
+
     kontrol = kullaniciAdi + "." + sifre;
 
     ifstream kullanicilarTXT;
@@ -377,46 +398,70 @@ void girisMenu() {
     }
 }
 
-#pragma endregion
-
-void temizle() {
-    cout << "\x1B[2J\x1B[H";
-}
-
 void kullaniciUyeKayit() {
     string sifre;
     string eMail;
     string kullaniciAdi;
     string satirlar;
     int menuNo;
+    regex pattern("^[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+$");
     bool gecis = true;
     temizle();
 
     cout << "Kullanici Adi: ";
     cin >> kullaniciAdi;
-    cout << "\nSifre: ";
-    cin >> sifre;
-    cout << "\nE-Mail: ";
-    cin >> eMail;
 
-    ofstream kullanicilarTXT;
-    kullanicilarTXT.open("kullanıcılar.TXT",ios_base::app);
-    kullanicilarTXT << kullaniciAdi + "." + sifre << endl;
-    kullanicilarTXT << kullaniciAdi << endl;
-    kullanicilarTXT << sifre << endl;
-    kullanicilarTXT << eMail << endl;
-    kullanicilarTXT.close();
+    cout << "\nSifre: ";
+    char karakter = _getch();
+    while (karakter != '\r')
+    {
+        if (karakter == '\b')
+        {
+            if (sifre.length() > 0)
+            {
+                sifre.erase(sifre.length() - 1);
+                _putch('\b');
+                _putch(' ');
+                _putch('\b');
+            }
+        }
+        else {
+            sifre += karakter;
+            _putch('*');
+        }
+        karakter = _getch();
+    }
+
+    cin.ignore();
+    cout << "\n\nE-Mail: ";
+    getline(cin, eMail);
+    if (regex_search(eMail, pattern))
+    {
+        ofstream kullanicilarTXT;
+        kullanicilarTXT.open("kullanıcılar.TXT", ios_base::app);
+        kullanicilarTXT << kullaniciAdi + "." + sifre << endl;
+        kullanicilarTXT << kullaniciAdi << endl;
+        kullanicilarTXT << sifre << endl;
+        kullanicilarTXT << eMail << endl;
+        kullanicilarTXT.close();
+    }
+    else {
+        kullaniciUyeKayit();
+    }
 
     while (gecis) {
-        cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.";
-        cin.ignore();
+        cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.\n";
         cin >> menuNo;
         if (menuNo == 5) {
             gecis = false;
             anaMenu();
         }
     }
+}
+#pragma endregion
 
+void temizle() {
+    cout << "\x1B[2J\x1B[H";
 }
 
 void anaMenu() {
