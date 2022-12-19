@@ -83,7 +83,7 @@ public:
         this->sifre = sifre;
     }
     void kiyafetGoster();
-    void siparisGoster();
+    void siparisTakip();
     void sikayetOlustur();
     void sifreDegistir();
     void kullaniciMenu();
@@ -127,32 +127,134 @@ void Yonetici::yoneticiMenu() {
     }
 }
 
+#pragma region URUN GIRISLERI
 void Yonetici::elbiseGirisi() {
     temizle();
     cin.ignore();
-    string boyut;
+    string beden;
     string renk;
-    string kategori;
-    int kiyafetAdi;
+    string kiyafetAdi;
     double fiyat;
+    cout << "Kiyafet Adi:";
+    cin >> kiyafetAdi;
+    cout << "\nBeden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
 
     ofstream elbiseTXT;
     elbiseTXT.open("elbise.TXT", ios_base::app);
+    elbiseTXT << kiyafetAdi + "." + beden + "." + renk << endl;
+    elbiseTXT << fiyat << endl;
+    elbiseTXT.close();
+    yoneticim.yoneticiMenu();
 }
+void Yonetici::tisortGirisi() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
 
-void Yonetici::tisortGirisi() {};
+    ofstream tisortTXT;
+    tisortTXT.open("elbise.TXT", ios_base::app);
+    tisortTXT << beden + "." + renk << endl;
+    tisortTXT << fiyat << endl;
+    tisortTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Yonetici::pantolonGirisi() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
 
-void Yonetici::pantolonGirisi() {};
+    ofstream pantolonTXT;
+    pantolonTXT.open("elbise.TXT", ios_base::app);
+    pantolonTXT << beden + "." + renk << endl;
+    pantolonTXT << fiyat << endl;
+    pantolonTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Yonetici::gomlekGirisi() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
 
-void Yonetici::gomlekGirisi() {};
+    ofstream gomlekTXT;
+    gomlekTXT.open("elbise.TXT", ios_base::app);
+    gomlekTXT << beden + "." + renk << endl;
+    gomlekTXT << fiyat << endl;
+    gomlekTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Yonetici::etekGirisi() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
 
-void Yonetici::etekGirisi() {};
+    ofstream etekTXT;
+    etekTXT.open("elbise.TXT", ios_base::app);
+    etekTXT << beden + "." + renk << endl;
+    etekTXT << fiyat << endl;
+    etekTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Yonetici::ayakkabiGirisi() {
+    temizle();
+    cin.ignore();
+    string numara;
+    string renk;
+    double fiyat;
+    cout << "Numara: ";
+    cin >> numara;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
 
-void Yonetici::ayakkabiGirisi() {};
-
+    ofstream ayakkabiTXT;
+    ayakkabiTXT.open("elbise.TXT", ios_base::app);
+    ayakkabiTXT << numara + "." + renk << endl;
+    ayakkabiTXT << fiyat << endl;
+    ayakkabiTXT.close();
+    yoneticim.yoneticiMenu();
+};
 void Yonetici::urunGirisi() {
+    temizle();
     int menuNo;
-    cout << "1. Elbise Ekle\n2. TisOrt Ekle\n3. Pantolon Ekle\n4. GOmlek Ekle\n5. Etek Ekle\6. Ayakkabi Ekle";
+    cout << "1. Elbise Ekle\n2. Tisort Ekle\n3. Pantolon Ekle\n4. Gomlek Ekle\n5. Etek Ekle\n6. Ayakkabi Ekle";
     cin >> menuNo;
 
     switch (menuNo) {
@@ -176,8 +278,9 @@ void Yonetici::urunGirisi() {
         break;
     default:
         break;
-   }
+    }
 };
+#pragma endregion
 
 void Yonetici::sikayetOku() {
     temizle();
@@ -225,7 +328,7 @@ void Kullanici::kullaniciMenu() {
         kullanicim.kiyafetGoster();
         break;
     case 2:
-        kullanicim.siparisGoster();
+        kullanicim.siparisTakip();
         break;
     case 3:
         kullanicim.sikayetOlustur();
@@ -241,9 +344,10 @@ void Kullanici::kullaniciMenu() {
     }
 }
 
-void Kullanici::kiyafetGoster() {};
+void Kullanici::kiyafetGoster() {
+};
 
-void Kullanici::siparisGoster() {};
+void Kullanici::siparisTakip() {};
 
 void Kullanici::sikayetOlustur() {
     temizle();
@@ -368,7 +472,6 @@ void kullaniciGirisMenu() {
         cout << kullanicilar[i] << endl;
         if (kontrol == kullanicilar[i]) {
             cout << "basarili" << endl;
-            //string objeNo = to_string(i);
             objeAdi = kullaniciAdi;
             Kullanici objeAdi(kullaniciAdi, sifre);
             kullanicim = objeAdi;

@@ -1,10 +1,8 @@
 ﻿  OOP Project.cpp
-D:\gunceloop\OOP Project\OOP Project.cpp(137,12): warning C4101: 'fiyat': yerel değişken başvurusu kaldırıldı
-D:\gunceloop\OOP Project\OOP Project.cpp(136,9): warning C4101: 'kiyafetAdi': yerel değişken başvurusu kaldırıldı
-D:\gunceloop\OOP Project\OOP Project.cpp(191,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(281,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(284,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
-D:\gunceloop\OOP Project\OOP Project.cpp(293,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(319,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(346,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-  OOP Project.vcxproj -> D:\gunceloop\Debug\OOP Project.exe
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(203,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(293,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(296,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(305,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(331,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+C:\Users\kutay\Documents\GitHub\gunceloop\OOP Project\OOP Project.cpp(378,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+  OOP Project.vcxproj -> C:\Users\kutay\Documents\GitHub\gunceloop\Debug\OOP Project.exe
