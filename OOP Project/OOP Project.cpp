@@ -87,6 +87,14 @@ public:
     void sikayetOlustur();
     void sifreDegistir();
     void kullaniciMenu();
+
+    void elbiseGoster();
+    void tisortGoster();
+    void pantolonGoster();
+    void gomlekGoster();
+    void etekGoster();
+    void ayakkabiGoster();
+
 };
 
 Kullanici kullanicim("asdasd", "asdasda");
@@ -119,7 +127,7 @@ void Yonetici::yoneticiMenu() {
         yoneticim.faturaGoster();
         break;
     case 6:
-        yoneticiGirisMenu();
+        anaMenu();
         break;
     default:
         yoneticim.yoneticiMenu();
@@ -135,6 +143,7 @@ void Yonetici::elbiseGirisi() {
     string renk;
     string kiyafetAdi;
     double fiyat;
+
     cout << "Kiyafet Adi:";
     cin >> kiyafetAdi;
     cout << "\nBeden: ";
@@ -147,10 +156,14 @@ void Yonetici::elbiseGirisi() {
     ofstream elbiseTXT;
     elbiseTXT.open("elbise.TXT", ios_base::app);
     elbiseTXT << kiyafetAdi + "." + beden + "." + renk << endl;
+    elbiseTXT << kiyafetAdi << endl;
+    elbiseTXT << beden << endl;
+    elbiseTXT << renk << endl;
     elbiseTXT << fiyat << endl;
     elbiseTXT.close();
     yoneticim.yoneticiMenu();
 }
+
 void Yonetici::tisortGirisi() {
     temizle();
     cin.ignore();
@@ -315,6 +328,8 @@ void Yonetici::indirimKoduTanimla() {};
 void Yonetici::faturaGoster() {};
 #pragma endregion
 
+
+
 #pragma region KULLANICI FONKSIYONLARI
 
 void Kullanici::kullaniciMenu() {
@@ -337,7 +352,7 @@ void Kullanici::kullaniciMenu() {
         kullanicim.sifreDegistir();
         break;
     case 5:
-        kullaniciGirisMenu();
+        anaMenu();
         break;
     default:
         break;
@@ -345,6 +360,186 @@ void Kullanici::kullaniciMenu() {
 }
 
 void Kullanici::kiyafetGoster() {
+    temizle();
+    int menuNo;
+    cout << "1'e bas\n";
+    cin >> menuNo;
+
+    switch (menuNo) {
+    case 1:
+        kullanicim.elbiseGoster();
+        break;
+    case 2:
+
+        break;
+    case 3:
+
+        break;
+    case 4:
+
+        break;
+    case 5:
+
+        break;
+    case 6:
+
+        break;
+    default:
+        break;
+    }
+};
+
+void Kullanici::elbiseGoster() {
+    temizle();
+    cin.ignore();
+    string satir;
+    vector<string> elbiseler;
+    ifstream elbiseTXT;
+    elbiseTXT.open("elbise.txt");
+    while (getline(elbiseTXT, satir)) elbiseler.push_back(satir);
+
+    int menuNum;
+    int a = 1;
+    cout << "1.Ekoseli Elbise\n2.Drapeli Elbise\n3.Straplez Elbise" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        temizle();
+        for (int i = 0; i < elbiseler.size(); i++)
+        {
+            if (elbiseler[i] == "Ekoseli") { 
+                string b = to_string(a);
+                cout << b + "." + elbiseler[i + 2] + " Ekoseli Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
+                a++;
+            }
+        }
+        break;
+    case 2:
+        for (int i = 0; i < elbiseler.size(); i++)
+        {
+            if (elbiseler[i] == "Drapeli") {
+                string b = to_string(a);
+                cout << b + "." + elbiseler[i + 2] + " Drapeli Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
+                a++;
+            }
+        }
+        break;
+    case 3:
+        for (int i = 0; i < elbiseler.size(); i++)
+        {
+
+            if (elbiseler[i] == "Straplez") {
+
+                string b = to_string(a);
+                cout << b + "." + elbiseler[i + 2] + " Straplez Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
+                a++;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+}
+void Kullanici::tisortGoster() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
+
+    ofstream tisortTXT;
+    tisortTXT.open("elbise.TXT", ios_base::app);
+    tisortTXT << beden + "." + renk << endl;
+    tisortTXT << fiyat << endl;
+    tisortTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Kullanici::pantolonGoster() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
+
+    ofstream pantolonTXT;
+    pantolonTXT.open("elbise.TXT", ios_base::app);
+    pantolonTXT << beden + "." + renk << endl;
+    pantolonTXT << fiyat << endl;
+    pantolonTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Kullanici::gomlekGoster() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
+
+    ofstream gomlekTXT;
+    gomlekTXT.open("elbise.TXT", ios_base::app);
+    gomlekTXT << beden + "." + renk << endl;
+    gomlekTXT << fiyat << endl;
+    gomlekTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Kullanici::etekGoster() {
+    temizle();
+    cin.ignore();
+    string beden;
+    string renk;
+    double fiyat;
+    cout << "Beden: ";
+    cin >> beden;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
+
+    ofstream etekTXT;
+    etekTXT.open("elbise.TXT", ios_base::app);
+    etekTXT << beden + "." + renk << endl;
+    etekTXT << fiyat << endl;
+    etekTXT.close();
+    yoneticim.yoneticiMenu();
+};
+void Kullanici::ayakkabiGoster() {
+    temizle();
+    cin.ignore();
+    string numara;
+    string renk;
+    double fiyat;
+    cout << "Numara: ";
+    cin >> numara;
+    cout << "\nRenk: ";
+    cin >> renk;
+    cout << "\nFiyat: ";
+    cin >> fiyat;
+
+    ofstream ayakkabiTXT;
+    ayakkabiTXT.open("elbise.TXT", ios_base::app);
+    ayakkabiTXT << numara + "." + renk << endl;
+    ayakkabiTXT << fiyat << endl;
+    ayakkabiTXT.close();
+    yoneticim.yoneticiMenu();
 };
 
 void Kullanici::siparisTakip() {};
