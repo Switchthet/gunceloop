@@ -1,9 +1,11 @@
 ﻿  OOP Project.cpp
-D:\gunceloop\OOP Project\OOP Project.cpp(307,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(409,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(566,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(569,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
-D:\gunceloop\OOP Project\OOP Project.cpp(578,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(604,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(651,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(316,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(420,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(441,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(451,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(602,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(605,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
+D:\gunceloop\OOP Project\OOP Project.cpp(614,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(640,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(687,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
   OOP Project.vcxproj -> D:\gunceloop\Debug\OOP Project.exe

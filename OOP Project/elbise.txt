@@ -6,3 +6,7 @@ Ekoseli
 L
 Kirmizi
 70
+Drapeli
+M
+Yesil
+S

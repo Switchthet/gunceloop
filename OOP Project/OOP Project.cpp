@@ -21,13 +21,23 @@ public:
     int dakika;
 };
 
+class Sepet {
+public:
+
+};
+
 class Kiyafet {
 public:
-    string kategori;
-    int kiyafet_adi;
+    string kiyafetAdi;
     double fiyat;
-    string boyut;
+    string beden;
     string renk;
+    Kiyafet(string kiyafetAdi, string beden, string renk, double fiyat) {
+        this->fiyat = fiyat;
+        this->kiyafetAdi = kiyafetAdi;
+        this->beden = beden;
+        this->renk = renk;
+    }
 };
 
 class Siparis : public Kiyafet {
@@ -99,7 +109,8 @@ public:
 
 Kullanici kullanicim("asdasd", "asdasda");
 Yonetici yoneticim("a");
-
+vector<Kiyafet> sepet;
+vector<Kiyafet> geciciSepet;
 #pragma endregion
 
 #pragma region FONKSİYONLAR
@@ -155,7 +166,6 @@ void Yonetici::elbiseGirisi() {
 
     ofstream elbiseTXT;
     elbiseTXT.open("elbise.TXT", ios_base::app);
-    elbiseTXT << kiyafetAdi + "." + beden + "." + renk << endl;
     elbiseTXT << kiyafetAdi << endl;
     elbiseTXT << beden << endl;
     elbiseTXT << renk << endl;
@@ -163,7 +173,6 @@ void Yonetici::elbiseGirisi() {
     elbiseTXT.close();
     yoneticim.yoneticiMenu();
 }
-
 void Yonetici::tisortGirisi() {
     temizle();
     cin.ignore();
@@ -392,6 +401,7 @@ void Kullanici::kiyafetGoster() {
 void Kullanici::elbiseGoster() {
     temizle();
     cin.ignore();
+    geciciSepet.clear();
     string satir;
     vector<string> elbiseler;
     ifstream elbiseTXT;
@@ -400,6 +410,7 @@ void Kullanici::elbiseGoster() {
 
     int menuNum;
     int a = 1;
+    int tercih;
     cout << "1.Ekoseli Elbise\n2.Drapeli Elbise\n3.Straplez Elbise" << endl;
     cin >> menuNum;
     switch (menuNum)
@@ -410,20 +421,41 @@ void Kullanici::elbiseGoster() {
         {
             if (elbiseler[i] == "Ekoseli") { 
                 string b = to_string(a);
+                string kiyafetAdi = elbiseler[i];
+                string renk = elbiseler[i + 2];
+                string beden = elbiseler[i + 1];
+                double fiyat = stod(elbiseler[i + 3]);
+
+                Kiyafet kiyafetim(kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
                 cout << b + "." + elbiseler[i + 2] + " Ekoseli Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
                 a++;
             }
         }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih-1]);
         break;
+
     case 2:
         for (int i = 0; i < elbiseler.size(); i++)
         {
             if (elbiseler[i] == "Drapeli") {
                 string b = to_string(a);
+                string kiyafetAdi = elbiseler[i];
+                string renk = elbiseler[i + 2];
+                string beden = elbiseler[i + 1];
+                double fiyat = stod(elbiseler[i + 3]);
+
+                Kiyafet kiyafetim(kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
                 cout << b + "." + elbiseler[i + 2] + " Drapeli Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
                 a++;
             }
         }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
         break;
     case 3:
         for (int i = 0; i < elbiseler.size(); i++)
@@ -432,10 +464,20 @@ void Kullanici::elbiseGoster() {
             if (elbiseler[i] == "Straplez") {
 
                 string b = to_string(a);
+                string kiyafetAdi = elbiseler[i];
+                string renk = elbiseler[i + 2];
+                string beden = elbiseler[i + 1];
+                double fiyat = stod(elbiseler[i + 3]);
+
+                Kiyafet kiyafetim(kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
                 cout << b + "." + elbiseler[i + 2] + " Straplez Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
                 a++;
             }
         }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
         break;
     default:
         break;
