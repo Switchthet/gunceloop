@@ -1,11 +1,28 @@
 ﻿  OOP Project.cpp
-D:\gunceloop\OOP Project\OOP Project.cpp(316,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(420,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(441,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(451,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(602,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(605,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
-D:\gunceloop\OOP Project\OOP Project.cpp(614,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(640,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-D:\gunceloop\OOP Project\OOP Project.cpp(687,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
-  OOP Project.vcxproj -> D:\gunceloop\Debug\OOP Project.exe
+D:\gunceloop\OOP Project\OOP Project.cpp(46,12): error C2512: 'Kiyafet': kullanılabilir uygun varsayılan oluşturucu yok
+D:\gunceloop\OOP Project\OOP Project.cpp(24,7): message : 'Kiyafet' bildirimine bakın
+D:\gunceloop\OOP Project\OOP Project.cpp(374,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(477,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(501,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(524,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(571,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(595,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(618,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(665,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(689,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(712,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(759,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(783,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(806,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(853,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(877,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(900,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(947,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(971,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(994,27): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(1026,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(1083,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(1086,30): warning C4834: 'nodiscard' özniteliği içeren işlevin dönüş değeri atılıyor
+D:\gunceloop\OOP Project\OOP Project.cpp(1095,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(1120,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı
+D:\gunceloop\OOP Project\OOP Project.cpp(1167,23): warning C4018: '<': imzalı/imzasız uyuşmazlığı

@@ -21,43 +21,46 @@ public:
     int dakika;
 };
 
-class Sepet {
-public:
-
-};
-
 class Kiyafet {
 public:
     string kiyafetAdi;
     double fiyat;
     string beden;
     string renk;
-    Kiyafet(string kiyafetAdi, string beden, string renk, double fiyat) {
-        this->fiyat = fiyat;
+    string kategori;
+    Kiyafet(string kategori, string kiyafetAdi, string beden, string renk, double fiyat) {
+        this->kategori = kategori;
         this->kiyafetAdi = kiyafetAdi;
         this->beden = beden;
         this->renk = renk;
+        this->fiyat = fiyat;
     }
 };
 
 class Siparis : public Kiyafet {
 public:
-    int siparis_no;
-    double siparis_fiyat;
-    Zaman siparis_baslangic;
-    Zaman siparis_ulasim;
+    int siparisNo;
+    double siparisFiyat;
+    Zaman siparisBaslangic;
+    Zaman siparisUlasim;
+    Siparis(Zaman siparisBaslangic, Zaman siparisUlasim, double siparisFiyat, int siparisNo) {
+        this->siparisBaslangic = siparisBaslangic;
+        this->siparisUlasim = siparisUlasim;
+        this->siparisFiyat = siparisFiyat;
+        this->siparisNo = siparisNo;
+    }
 };
 
 class Kisi {
 public:
-    char* ad_soyad;
-    char telno;
+    string adSoyad;
+    string telno;
 };
 
 class Kurye : public Kisi{
 public:
-    Zaman* dagitim_bitisler;
-    int* siparis_numaralari;
+    Zaman dagitimBitisler;
+    int siparisNumaralari;
 };
 
 class Yonetici : public Kisi {
@@ -104,13 +107,14 @@ public:
     void gomlekGoster();
     void etekGoster();
     void ayakkabiGoster();
-
+    void sepetiGoruntule();
 };
 
-Kullanici kullanicim("asdasd", "asdasda");
-Yonetici yoneticim("a");
+Kullanici kullanicim("","");
+Yonetici yoneticim("");
 vector<Kiyafet> sepet;
 vector<Kiyafet> geciciSepet;
+vector<Siparis> siparis;
 #pragma endregion
 
 #pragma region FONKSİYONLAR
@@ -146,16 +150,18 @@ void Yonetici::yoneticiMenu() {
     }
 }
 
-#pragma region URUN GIRISLERI
 void Yonetici::elbiseGirisi() {
     temizle();
     cin.ignore();
     string beden;
     string renk;
     string kiyafetAdi;
+    string kategori;
     double fiyat;
 
-    cout << "Kiyafet Adi:";
+    cout << "Kategori: ";
+    cin >> kategori;
+    cout << "\nKiyafet Adi: ";
     cin >> kiyafetAdi;
     cout << "\nBeden: ";
     cin >> beden;
@@ -166,6 +172,7 @@ void Yonetici::elbiseGirisi() {
 
     ofstream elbiseTXT;
     elbiseTXT.open("elbise.TXT", ios_base::app);
+    elbiseTXT << kategori << endl;
     elbiseTXT << kiyafetAdi << endl;
     elbiseTXT << beden << endl;
     elbiseTXT << renk << endl;
@@ -178,8 +185,15 @@ void Yonetici::tisortGirisi() {
     cin.ignore();
     string beden;
     string renk;
+    string kiyafetAdi;
+    string kategori;
     double fiyat;
-    cout << "Beden: ";
+
+    cout << "Kategori: ";
+    cin >> kategori;
+    cout << "\nKiyafet Adi: ";
+    cin >> kiyafetAdi;
+    cout << "\nBeden: ";
     cin >> beden;
     cout << "\nRenk: ";
     cin >> renk;
@@ -187,8 +201,11 @@ void Yonetici::tisortGirisi() {
     cin >> fiyat;
 
     ofstream tisortTXT;
-    tisortTXT.open("elbise.TXT", ios_base::app);
-    tisortTXT << beden + "." + renk << endl;
+    tisortTXT.open("tisort.TXT", ios_base::app);
+    tisortTXT << kategori << endl;
+    tisortTXT << kiyafetAdi << endl;
+    tisortTXT << beden << endl;
+    tisortTXT << renk << endl;
     tisortTXT << fiyat << endl;
     tisortTXT.close();
     yoneticim.yoneticiMenu();
@@ -198,8 +215,15 @@ void Yonetici::pantolonGirisi() {
     cin.ignore();
     string beden;
     string renk;
+    string kiyafetAdi;
+    string kategori;
     double fiyat;
-    cout << "Beden: ";
+
+    cout << "Kategori: ";
+    cin >> kategori;
+    cout << "\nKiyafet Adi: ";
+    cin >> kiyafetAdi;
+    cout << "\nBeden: ";
     cin >> beden;
     cout << "\nRenk: ";
     cin >> renk;
@@ -207,8 +231,11 @@ void Yonetici::pantolonGirisi() {
     cin >> fiyat;
 
     ofstream pantolonTXT;
-    pantolonTXT.open("elbise.TXT", ios_base::app);
-    pantolonTXT << beden + "." + renk << endl;
+    pantolonTXT.open("pantolon.TXT", ios_base::app);
+    pantolonTXT << kategori << endl;
+    pantolonTXT << kiyafetAdi << endl;
+    pantolonTXT << beden << endl;
+    pantolonTXT << renk << endl;
     pantolonTXT << fiyat << endl;
     pantolonTXT.close();
     yoneticim.yoneticiMenu();
@@ -218,8 +245,15 @@ void Yonetici::gomlekGirisi() {
     cin.ignore();
     string beden;
     string renk;
+    string kiyafetAdi;
+    string kategori;
     double fiyat;
-    cout << "Beden: ";
+
+    cout << "Kategori: ";
+    cin >> kategori;
+    cout << "\nKiyafet Adi: ";
+    cin >> kiyafetAdi;
+    cout << "\nBeden: ";
     cin >> beden;
     cout << "\nRenk: ";
     cin >> renk;
@@ -227,8 +261,11 @@ void Yonetici::gomlekGirisi() {
     cin >> fiyat;
 
     ofstream gomlekTXT;
-    gomlekTXT.open("elbise.TXT", ios_base::app);
-    gomlekTXT << beden + "." + renk << endl;
+    gomlekTXT.open("gomlek.TXT", ios_base::app);
+    gomlekTXT << kategori << endl;
+    gomlekTXT << kiyafetAdi << endl;
+    gomlekTXT << beden << endl;
+    gomlekTXT << renk << endl;
     gomlekTXT << fiyat << endl;
     gomlekTXT.close();
     yoneticim.yoneticiMenu();
@@ -238,8 +275,15 @@ void Yonetici::etekGirisi() {
     cin.ignore();
     string beden;
     string renk;
+    string kiyafetAdi;
+    string kategori;
     double fiyat;
-    cout << "Beden: ";
+
+    cout << "Kategori: ";
+    cin >> kategori;
+    cout << "\nKiyafet Adi: ";
+    cin >> kiyafetAdi;
+    cout << "\nBeden: ";
     cin >> beden;
     cout << "\nRenk: ";
     cin >> renk;
@@ -247,8 +291,11 @@ void Yonetici::etekGirisi() {
     cin >> fiyat;
 
     ofstream etekTXT;
-    etekTXT.open("elbise.TXT", ios_base::app);
-    etekTXT << beden + "." + renk << endl;
+    etekTXT.open("etek.TXT", ios_base::app);
+    etekTXT << kategori << endl;
+    etekTXT << kiyafetAdi << endl;
+    etekTXT << beden << endl;
+    etekTXT << renk << endl;
     etekTXT << fiyat << endl;
     etekTXT.close();
     yoneticim.yoneticiMenu();
@@ -256,19 +303,29 @@ void Yonetici::etekGirisi() {
 void Yonetici::ayakkabiGirisi() {
     temizle();
     cin.ignore();
-    string numara;
+    string beden;
     string renk;
+    string kiyafetAdi;
+    string kategori;
     double fiyat;
-    cout << "Numara: ";
-    cin >> numara;
+
+    cout << "Kategori: ";
+    cin >> kategori;
+    cout << "\nKiyafet Adi: ";
+    cin >> kiyafetAdi;
+    cout << "\nBeden: ";
+    cin >> beden;
     cout << "\nRenk: ";
     cin >> renk;
     cout << "\nFiyat: ";
     cin >> fiyat;
 
     ofstream ayakkabiTXT;
-    ayakkabiTXT.open("elbise.TXT", ios_base::app);
-    ayakkabiTXT << numara + "." + renk << endl;
+    ayakkabiTXT.open("ayakkabi.TXT", ios_base::app);
+    ayakkabiTXT << kategori << endl;
+    ayakkabiTXT << kiyafetAdi << endl;
+    ayakkabiTXT << beden << endl;
+    ayakkabiTXT << renk << endl;
     ayakkabiTXT << fiyat << endl;
     ayakkabiTXT.close();
     yoneticim.yoneticiMenu();
@@ -302,7 +359,6 @@ void Yonetici::urunGirisi() {
         break;
     }
 };
-#pragma endregion
 
 void Yonetici::sikayetOku() {
     temizle();
@@ -329,22 +385,16 @@ void Yonetici::sikayetOku() {
     }
 
 };
-
 void Yonetici::kuryeAta() {};
-
 void Yonetici::indirimKoduTanimla() {};
-
 void Yonetici::faturaGoster() {};
 #pragma endregion
 
-
-
 #pragma region KULLANICI FONKSIYONLARI
-
 void Kullanici::kullaniciMenu() {
     temizle();
     int menuNum;
-    cout << "1. Kiyafet Kategorilerini Goster ve Urun Sec\n2. Siparis Takip\n3. Sikayet ve Oneri Olustur\n4. Sifre Degistir\n5. Geri Don\n";
+    cout << "1. Kiyafet Kategorilerini Goster ve Urun Sec\n2. Siparis Takip\n3. Sikayet ve Oneri Olustur\n4. Sifre Degistir\n5. Sepeti Goruntule\n6. Geri Don\n";
     cin >> menuNum;
     switch (menuNum)
     {
@@ -361,8 +411,10 @@ void Kullanici::kullaniciMenu() {
         kullanicim.sifreDegistir();
         break;
     case 5:
-        anaMenu();
+        sepetiGoruntule();
         break;
+    case 6:
+        anaMenu();
     default:
         break;
     }
@@ -376,28 +428,27 @@ void Kullanici::kiyafetGoster() {
 
     switch (menuNo) {
     case 1:
-        kullanicim.elbiseGoster();
+        elbiseGoster();
         break;
     case 2:
-
+        tisortGoster();
         break;
     case 3:
-
+        pantolonGoster();
         break;
     case 4:
-
+        gomlekGoster();
         break;
     case 5:
-
+        etekGoster();
         break;
     case 6:
-
+        ayakkabiGoster();
         break;
     default:
         break;
     }
 };
-
 void Kullanici::elbiseGoster() {
     temizle();
     cin.ignore();
@@ -421,20 +472,23 @@ void Kullanici::elbiseGoster() {
         {
             if (elbiseler[i] == "Ekoseli") { 
                 string b = to_string(a);
+                string kategori = elbiseler[i - 1];
                 string kiyafetAdi = elbiseler[i];
                 string renk = elbiseler[i + 2];
                 string beden = elbiseler[i + 1];
                 double fiyat = stod(elbiseler[i + 3]);
 
-                Kiyafet kiyafetim(kiyafetAdi, beden, renk, fiyat);
+                Kiyafet kiyafetim(kategori,kiyafetAdi,beden,renk,fiyat);
                 geciciSepet.push_back(kiyafetim);
-                cout << b + "." + elbiseler[i + 2] + " Ekoseli Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
+                cout << b + "." + elbiseler[i + 2] + " " + elbiseler[i] + " " +  elbiseler[i - 1] + "\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
                 a++;
             }
         }
         cout << "Lutfen tercihinizi giriniz: \n";
         cin >> tercih;
         sepet.push_back(geciciSepet[tercih-1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
         break;
 
     case 2:
@@ -442,20 +496,23 @@ void Kullanici::elbiseGoster() {
         {
             if (elbiseler[i] == "Drapeli") {
                 string b = to_string(a);
+                string kategori = elbiseler[i - 1];
                 string kiyafetAdi = elbiseler[i];
                 string renk = elbiseler[i + 2];
                 string beden = elbiseler[i + 1];
                 double fiyat = stod(elbiseler[i + 3]);
 
-                Kiyafet kiyafetim(kiyafetAdi, beden, renk, fiyat);
+                Kiyafet kiyafetim(kategori,kiyafetAdi, beden, renk, fiyat);
                 geciciSepet.push_back(kiyafetim);
-                cout << b + "." + elbiseler[i + 2] + " Drapeli Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
+                cout << b + "." + elbiseler[i + 2] + " " + elbiseler[i] + " " + elbiseler[i - 1] + "\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
                 a++;
             }
         }
         cout << "Lutfen tercihinizi giriniz: \n";
         cin >> tercih;
         sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
         break;
     case 3:
         for (int i = 0; i < elbiseler.size(); i++)
@@ -464,20 +521,23 @@ void Kullanici::elbiseGoster() {
             if (elbiseler[i] == "Straplez") {
 
                 string b = to_string(a);
+                string kategori = elbiseler[i - 1];
                 string kiyafetAdi = elbiseler[i];
                 string renk = elbiseler[i + 2];
                 string beden = elbiseler[i + 1];
                 double fiyat = stod(elbiseler[i + 3]);
 
-                Kiyafet kiyafetim(kiyafetAdi, beden, renk, fiyat);
+                Kiyafet kiyafetim(kategori,kiyafetAdi, beden, renk, fiyat);
                 geciciSepet.push_back(kiyafetim);
-                cout << b + "." + elbiseler[i + 2] + " Straplez Elbise\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
+                cout << b + "." + elbiseler[i + 2] + " " + elbiseler[i] + " " + elbiseler[i - 1] + "\nBeden: " + elbiseler[i + 1] + "\nFiyat: " + elbiseler[i + 3] << endl;
                 a++;
             }
         }
         cout << "Lutfen tercihinizi giriniz: \n";
         cin >> tercih;
         sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
         break;
     default:
         break;
@@ -486,106 +546,499 @@ void Kullanici::elbiseGoster() {
 void Kullanici::tisortGoster() {
     temizle();
     cin.ignore();
-    string beden;
-    string renk;
-    double fiyat;
-    cout << "Beden: ";
-    cin >> beden;
-    cout << "\nRenk: ";
-    cin >> renk;
-    cout << "\nFiyat: ";
-    cin >> fiyat;
+    geciciSepet.clear();
+    string satir;
+    vector<string> tisortler;
+    ifstream tisortTXT;
+    tisortTXT.open("tisort.txt");
+    while (getline(tisortTXT, satir)) tisortler.push_back(satir);
 
-    ofstream tisortTXT;
-    tisortTXT.open("elbise.TXT", ios_base::app);
-    tisortTXT << beden + "." + renk << endl;
-    tisortTXT << fiyat << endl;
-    tisortTXT.close();
-    yoneticim.yoneticiMenu();
+    int menuNum;
+    int a = 1;
+    int tercih;
+    cout << "1.V Yaka Tisort\n2.Bisiklet Yaka Tisort\n3.Polo Yaka Tisort" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        temizle();
+        for (int i = 0; i < tisortler.size(); i++)
+        {
+            if (tisortler[i] == "VYaka") {
+                string b = to_string(a);
+                string kategori = tisortler[i - 1];
+                string kiyafetAdi = tisortler[i];
+                string renk = tisortler[i + 2];
+                string beden = tisortler[i + 1];
+                double fiyat = stod(tisortler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + tisortler[i + 2] + " " + tisortler[i] + " " + tisortler[i - 1] + "\nBeden: " + tisortler[i + 1] + "\nFiyat: " + tisortler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+
+    case 2:
+        for (int i = 0; i < tisortler.size(); i++)
+        {
+            if (tisortler[i] == "BisikletYaka") {
+                string b = to_string(a);
+                string kategori = tisortler[i - 1];
+                string kiyafetAdi = tisortler[i];
+                string renk = tisortler[i + 2];
+                string beden = tisortler[i + 1];
+                double fiyat = stod(tisortler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + tisortler[i + 2] + " " + tisortler[i] + " " + tisortler[i - 1] + "\nBeden: " + tisortler[i + 1] + "\nFiyat: " + tisortler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    case 3:
+        for (int i = 0; i < tisortler.size(); i++)
+        {
+
+            if (tisortler[i] == "PoloYaka") {
+
+                string b = to_string(a);
+                string kategori = tisortler[i - 1];
+                string kiyafetAdi = tisortler[i];
+                string renk = tisortler[i + 2];
+                string beden = tisortler[i + 1];
+                double fiyat = stod(tisortler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + tisortler[i + 2] + " " + tisortler[i] + " " + tisortler[i - 1] + "\nBeden: " + tisortler[i + 1] + "\nFiyat: " + tisortler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    default:
+        break;
+    }
 };
 void Kullanici::pantolonGoster() {
     temizle();
     cin.ignore();
-    string beden;
-    string renk;
-    double fiyat;
-    cout << "Beden: ";
-    cin >> beden;
-    cout << "\nRenk: ";
-    cin >> renk;
-    cout << "\nFiyat: ";
-    cin >> fiyat;
+    geciciSepet.clear();
+    string satir;
+    vector<string> pantolonlar;
+    ifstream pantolonTXT;
+    pantolonTXT.open("pantolon.txt");
+    while (getline(pantolonTXT, satir)) pantolonlar.push_back(satir);
 
-    ofstream pantolonTXT;
-    pantolonTXT.open("elbise.TXT", ios_base::app);
-    pantolonTXT << beden + "." + renk << endl;
-    pantolonTXT << fiyat << endl;
-    pantolonTXT.close();
-    yoneticim.yoneticiMenu();
+    int menuNum;
+    int a = 1;
+    int tercih;
+    cout << "1.Dar Paca Pantolon\n2.Ispanyol Paca Pantolon\n3.Boru Paca Pantolon" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        temizle();
+        for (int i = 0; i < pantolonlar.size(); i++)
+        {
+            if (pantolonlar[i] == "DarPaca") {
+                string b = to_string(a);
+                string kategori = pantolonlar[i - 1];
+                string kiyafetAdi = pantolonlar[i];
+                string renk = pantolonlar[i + 2];
+                string beden = pantolonlar[i + 1];
+                double fiyat = stod(pantolonlar[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + pantolonlar[i + 2] + " " + pantolonlar[i] + " " + pantolonlar[i - 1] + "\nBeden: " + pantolonlar[i + 1] + "\nFiyat: " + pantolonlar[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+
+    case 2:
+        for (int i = 0; i < pantolonlar.size(); i++)
+        {
+            if (pantolonlar[i] == "IspanyolPaca") {
+                string b = to_string(a);
+                string kategori = pantolonlar[i - 1];
+                string kiyafetAdi = pantolonlar[i];
+                string renk = pantolonlar[i + 2];
+                string beden = pantolonlar[i + 1];
+                double fiyat = stod(pantolonlar[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + pantolonlar[i + 2] + " " + pantolonlar[i] + " " + pantolonlar[i - 1] + "\nBeden: " + pantolonlar[i + 1] + "\nFiyat: " + pantolonlar[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    case 3:
+        for (int i = 0; i < pantolonlar.size(); i++)
+        {
+
+            if (pantolonlar[i] == "BoruPaca") {
+
+                string b = to_string(a);
+                string kategori = pantolonlar[i - 1];
+                string kiyafetAdi = pantolonlar[i];
+                string renk = pantolonlar[i + 2];
+                string beden = pantolonlar[i + 1];
+                double fiyat = stod(pantolonlar[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + pantolonlar[i + 2] + " " + pantolonlar[i] + " " + pantolonlar[i - 1] + "\nBeden: " + pantolonlar[i + 1] + "\nFiyat: " + pantolonlar[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    default:
+        break;
+    }
 };
 void Kullanici::gomlekGoster() {
     temizle();
     cin.ignore();
-    string beden;
-    string renk;
-    double fiyat;
-    cout << "Beden: ";
-    cin >> beden;
-    cout << "\nRenk: ";
-    cin >> renk;
-    cout << "\nFiyat: ";
-    cin >> fiyat;
+    geciciSepet.clear();
+    string satir;
+    vector<string> gomlekler;
+    ifstream gomlekTXT;
+    gomlekTXT.open("gomlek.txt");
+    while (getline(gomlekTXT, satir)) gomlekler.push_back(satir);
 
-    ofstream gomlekTXT;
-    gomlekTXT.open("elbise.TXT", ios_base::app);
-    gomlekTXT << beden + "." + renk << endl;
-    gomlekTXT << fiyat << endl;
-    gomlekTXT.close();
-    yoneticim.yoneticiMenu();
+    int menuNum;
+    int a = 1;
+    int tercih;
+    cout << "1.Oduncu Gomlek\n2.Keten Gomlek\n3.Cizgili Gomlek" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        temizle();
+        for (int i = 0; i < gomlekler.size(); i++)
+        {
+            if (gomlekler[i] == "Oduncu") {
+                string b = to_string(a);
+                string kategori = gomlekler[i - 1];
+                string kiyafetAdi = gomlekler[i];
+                string renk = gomlekler[i + 2];
+                string beden = gomlekler[i + 1];
+                double fiyat = stod(gomlekler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + gomlekler[i + 2] + " " + gomlekler[i] + " " + gomlekler[i - 1] + "\nBeden: " + gomlekler[i + 1] + "\nFiyat: " + gomlekler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+
+    case 2:
+        for (int i = 0; i < gomlekler.size(); i++)
+        {
+            if (gomlekler[i] == "Keten") {
+                string b = to_string(a);
+                string kategori = gomlekler[i - 1];
+                string kiyafetAdi = gomlekler[i];
+                string renk = gomlekler[i + 2];
+                string beden = gomlekler[i + 1];
+                double fiyat = stod(gomlekler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + gomlekler[i + 2] + " " + gomlekler[i] + " " + gomlekler[i - 1] + "\nBeden: " + gomlekler[i + 1] + "\nFiyat: " + gomlekler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    case 3:
+        for (int i = 0; i < gomlekler.size(); i++)
+        {
+
+            if (gomlekler[i] == "Cizgili") {
+
+                string b = to_string(a);
+                string kategori = gomlekler[i - 1];
+                string kiyafetAdi = gomlekler[i];
+                string renk = gomlekler[i + 2];
+                string beden = gomlekler[i + 1];
+                double fiyat = stod(gomlekler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + gomlekler[i + 2] + " " + gomlekler[i] + " " + gomlekler[i - 1] + "\nBeden: " + gomlekler[i + 1] + "\nFiyat: " + gomlekler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    default:
+        break;
+    }
 };
 void Kullanici::etekGoster() {
     temizle();
     cin.ignore();
-    string beden;
-    string renk;
-    double fiyat;
-    cout << "Beden: ";
-    cin >> beden;
-    cout << "\nRenk: ";
-    cin >> renk;
-    cout << "\nFiyat: ";
-    cin >> fiyat;
+    geciciSepet.clear();
+    string satir;
+    vector<string> etekler;
+    ifstream etekTXT;
+    etekTXT.open("etek.txt");
+    while (getline(etekTXT, satir)) etekler.push_back(satir);
 
-    ofstream etekTXT;
-    etekTXT.open("elbise.TXT", ios_base::app);
-    etekTXT << beden + "." + renk << endl;
-    etekTXT << fiyat << endl;
-    etekTXT.close();
-    yoneticim.yoneticiMenu();
+    int menuNum;
+    int a = 1;
+    int tercih;
+    cout << "1.Uzun Etek\n2.Kisa Etek\n3.Kalem Etek" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        temizle();
+        for (int i = 0; i < etekler.size(); i++)
+        {
+            if (etekler[i] == "Uzun") {
+                string b = to_string(a);
+                string kategori = etekler[i - 1];
+                string kiyafetAdi = etekler[i];
+                string renk = etekler[i + 2];
+                string beden = etekler[i + 1];
+                double fiyat = stod(etekler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + etekler[i + 2] + " " + etekler[i] + " " + etekler[i - 1] + "\nBeden: " + etekler[i + 1] + "\nFiyat: " + etekler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+
+    case 2:
+        for (int i = 0; i < etekler.size(); i++)
+        {
+            if (etekler[i] == "Kisa") {
+                string b = to_string(a);
+                string kategori = etekler[i - 1];
+                string kiyafetAdi = etekler[i];
+                string renk = etekler[i + 2];
+                string beden = etekler[i + 1];
+                double fiyat = stod(etekler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + etekler[i + 2] + " " + etekler[i] + " " + etekler[i - 1] + "\nBeden: " + etekler[i + 1] + "\nFiyat: " + etekler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    case 3:
+        for (int i = 0; i < etekler.size(); i++)
+        {
+
+            if (etekler[i] == "Kalem") {
+
+                string b = to_string(a);
+                string kategori = etekler[i - 1];
+                string kiyafetAdi = etekler[i];
+                string renk = etekler[i + 2];
+                string beden = etekler[i + 1];
+                double fiyat = stod(etekler[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + etekler[i + 2] + " " + etekler[i] + " " + etekler[i - 1] + "\nBeden: " + etekler[i + 1] + "\nFiyat: " + etekler[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    default:
+        break;
+    }
 };
 void Kullanici::ayakkabiGoster() {
     temizle();
     cin.ignore();
-    string numara;
-    string renk;
-    double fiyat;
-    cout << "Numara: ";
-    cin >> numara;
-    cout << "\nRenk: ";
-    cin >> renk;
-    cout << "\nFiyat: ";
-    cin >> fiyat;
+    geciciSepet.clear();
+    string satir;
+    vector<string> ayakkabilar;
+    ifstream ayakkabiTXT;
+    ayakkabiTXT.open("ayakkabi.txt");
+    while (getline(ayakkabiTXT, satir)) ayakkabilar.push_back(satir);
 
-    ofstream ayakkabiTXT;
-    ayakkabiTXT.open("elbise.TXT", ios_base::app);
-    ayakkabiTXT << numara + "." + renk << endl;
-    ayakkabiTXT << fiyat << endl;
-    ayakkabiTXT.close();
-    yoneticim.yoneticiMenu();
+    int menuNum;
+    int a = 1;
+    int tercih;
+    cout << "1.Spor Ayakkabi\n2.Topuklu Ayakkabi\n3.Babet Ayakkabi" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
+        temizle();
+        for (int i = 0; i < ayakkabilar.size(); i++)
+        {
+            if (ayakkabilar[i] == "Spor") {
+                string b = to_string(a);
+                string kategori = ayakkabilar[i - 1];
+                string kiyafetAdi = ayakkabilar[i];
+                string renk = ayakkabilar[i + 2];
+                string beden = ayakkabilar[i + 1];
+                double fiyat = stod(ayakkabilar[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + ayakkabilar[i + 2] + " " + ayakkabilar[i] + " " + ayakkabilar[i - 1] + "\nBeden: " + ayakkabilar[i + 1] + "\nFiyat: " + ayakkabilar[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+
+    case 2:
+        for (int i = 0; i < ayakkabilar.size(); i++)
+        {
+            if (ayakkabilar[i] == "Topuklu") {
+                string b = to_string(a);
+                string kategori = ayakkabilar[i - 1];
+                string kiyafetAdi = ayakkabilar[i];
+                string renk = ayakkabilar[i + 2];
+                string beden = ayakkabilar[i + 1];
+                double fiyat = stod(ayakkabilar[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + ayakkabilar[i + 2] + " " + ayakkabilar[i] + " " + ayakkabilar[i - 1] + "\nBeden: " + ayakkabilar[i + 1] + "\nFiyat: " + ayakkabilar[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    case 3:
+        for (int i = 0; i < ayakkabilar.size(); i++)
+        {
+
+            if (ayakkabilar[i] == "Babet") {
+
+                string b = to_string(a);
+                string kategori = ayakkabilar[i - 1];
+                string kiyafetAdi = ayakkabilar[i];
+                string renk = ayakkabilar[i + 2];
+                string beden = ayakkabilar[i + 1];
+                double fiyat = stod(ayakkabilar[i + 3]);
+
+                Kiyafet kiyafetim(kategori, kiyafetAdi, beden, renk, fiyat);
+                geciciSepet.push_back(kiyafetim);
+                cout << b + "." + ayakkabilar[i + 2] + " " + ayakkabilar[i] + " " + ayakkabilar[i - 1] + "\nBeden: " + ayakkabilar[i + 1] + "\nFiyat: " + ayakkabilar[i + 3] << endl;
+                a++;
+            }
+        }
+        cout << "Lutfen tercihinizi giriniz: \n";
+        cin >> tercih;
+        sepet.push_back(geciciSepet[tercih - 1]);
+        cout << "Urun sepete eklendi.";
+        kullaniciMenu();
+        break;
+    default:
+        break;
+    }
 };
 
-void Kullanici::siparisTakip() {};
+void Kullanici::sepetiGoruntule() {
+    int a = 1;
+    int menuNum;
+    for (int i = 0; i < sepet.size(); i++) {
+        string b = to_string(a);
+        string fiyat = to_string(sepet[i].fiyat);
+        cout << b + "." + sepet[i].renk + " " + sepet[i].kiyafetAdi + " " + sepet[i].kategori + "\nBeden: " + sepet[i].beden + "\nFiyat: " + fiyat << endl;
+        a++;
+    }
+    cout << "\n\n1. Sepeti onayla\n2. Sepeti temizle" << endl;
+    cin >> menuNum;
+    switch (menuNum)
+    {
+    case 1:
 
+        break;
+    case 2:
+        sepet.clear();
+        kullanicim.kullaniciMenu();
+        break;
+    default:
+        break;
+    }
+}
+void Kullanici::siparisTakip() {};
 void Kullanici::sikayetOlustur() {
     temizle();
     cin.ignore();
@@ -601,7 +1054,6 @@ void Kullanici::sikayetOlustur() {
 
     kullanicim.kullaniciMenu();
 };
-
 void Kullanici::sifreDegistir() {
     string yeniSifre;
     string eskiSifre;
@@ -637,11 +1089,9 @@ void Kullanici::sifreDegistir() {
     }
     kullanicilarTXTyazma.close();
 };
-
 #pragma endregion
 
 #pragma region GIRIS VE KAYIT FONKSIYONLARI
-
 void yoneticiGirisMenu() {
     string sifre;
     string kontrol;
@@ -664,7 +1114,6 @@ void yoneticiGirisMenu() {
         }
     }
 }
-
 void kullaniciGirisMenu() {
     string kullaniciAdi;
     string sifre;
@@ -717,7 +1166,6 @@ void kullaniciGirisMenu() {
         }
     }
 }
-
 void girisMenu() {
     int menuNum;
     temizle();
@@ -737,7 +1185,6 @@ void girisMenu() {
         break;
     }
 }
-
 void kullaniciUyeKayit() {
     string sifre;
     string eMail;
@@ -803,7 +1250,6 @@ void kullaniciUyeKayit() {
 void temizle() {
     cout << "\x1B[2J\x1B[H";
 }
-
 void anaMenu() {
     temizle();
     int menuNum;

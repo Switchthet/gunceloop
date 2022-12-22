@@ -1,12 +1,5 @@
-Ekoseli
-M
-Sari
-50
+Elbise
 Ekoseli
 L
-Kirmizi
-70
-Drapeli
-M
-Yesil
-S
+Sari
+50
