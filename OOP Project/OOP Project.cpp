@@ -1,4 +1,5 @@
-﻿using namespace std;
+﻿//KUTAY SARAÇ 402503
+using namespace std;
 #include <iostream>
 #include <fstream>
 #include <ostream>
@@ -20,7 +21,6 @@ public:
     int saat;
     int dakika;
 };
-
 class Kiyafet {
 public:
     string kiyafetAdi;
@@ -36,33 +36,32 @@ public:
         this->fiyat = fiyat;
     }
 };
-
-class Siparis : public Kiyafet {
+class Siparis {
 public:
     int siparisNo;
     double siparisFiyat;
     Zaman siparisBaslangic;
     Zaman siparisUlasim;
-    Siparis(Zaman siparisBaslangic, Zaman siparisUlasim, double siparisFiyat, int siparisNo) {
-        this->siparisBaslangic = siparisBaslangic;
-        this->siparisUlasim = siparisUlasim;
+    string siparisOzet;
+    string siparisAdres;
+    string siparisSahibi;
+    Siparis(string siparisSahibi, double siparisFiyat, string siparisOzet, string siparisAdres) {
+        this->siparisSahibi = siparisSahibi;
         this->siparisFiyat = siparisFiyat;
-        this->siparisNo = siparisNo;
+        this->siparisOzet = siparisOzet;
+        this->siparisAdres = siparisAdres;
     }
 };
-
 class Kisi {
 public:
     string adSoyad;
     string telno;
 };
-
 class Kurye : public Kisi{
 public:
     Zaman dagitimBitisler;
     int siparisNumaralari;
 };
-
 class Yonetici : public Kisi {
 public:
     string sifre;
@@ -82,18 +81,19 @@ public:
     void faturaGoster();
     void yoneticiMenu();
 };
-
 class Kullanici : public Kisi {
 public:
     string kullanici_adi;
-    char* eposta;
-    char* adres_ilce;
+    string ePosta;
+    string adresIlce;
     string sifre;
-    char* indirim_kodu;
+    string indirimKodu;
     char* dtarihi;
-    Kullanici(string kullanici_adi, string sifre) {
+    Kullanici();
+    Kullanici(string kullanici_adi, string sifre, string adres) {
         this->kullanici_adi = kullanici_adi;
         this->sifre = sifre;
+        this->adresIlce = adres;
     }
     void kiyafetGoster();
     void siparisTakip();
@@ -109,13 +109,13 @@ public:
     void ayakkabiGoster();
     void sepetiGoruntule();
 };
+#pragma endregion
 
-Kullanici kullanicim("","");
+Kullanici kullanicim("", "", "");
 Yonetici yoneticim("");
 vector<Kiyafet> sepet;
 vector<Kiyafet> geciciSepet;
-vector<Siparis> siparis;
-#pragma endregion
+vector<Siparis> faturalar;
 
 #pragma region FONKSİYONLAR
 #pragma region YONETICI FONKSIYONLARI
@@ -149,7 +149,6 @@ void Yonetici::yoneticiMenu() {
         break;
     }
 }
-
 void Yonetici::elbiseGirisi() {
     temizle();
     cin.ignore();
@@ -333,7 +332,7 @@ void Yonetici::ayakkabiGirisi() {
 void Yonetici::urunGirisi() {
     temizle();
     int menuNo;
-    cout << "1. Elbise Ekle\n2. Tisort Ekle\n3. Pantolon Ekle\n4. Gomlek Ekle\n5. Etek Ekle\n6. Ayakkabi Ekle";
+    cout << "1. Elbise Ekle\n2. Tisort Ekle\n3. Pantolon Ekle\n4. Gomlek Ekle\n5. Etek Ekle\n6. Ayakkabi Ekle\n7. Geri Don";
     cin >> menuNo;
 
     switch (menuNo) {
@@ -355,11 +354,14 @@ void Yonetici::urunGirisi() {
     case 6:
         yoneticim.ayakkabiGirisi();
         break;
+    case 7:
+        yoneticim.yoneticiMenu();
+        break;
     default:
+        yoneticim.urunGirisi();
         break;
     }
 };
-
 void Yonetici::sikayetOku() {
     temizle();
     string satir;
@@ -375,10 +377,10 @@ void Yonetici::sikayetOku() {
     }
 
     while (gecis) {
-        cout << "Geri gelmek icin lutfen 5'e basiniz.";
+        cout << "Geri gelmek icin lutfen 9'a basiniz.";
         cin.ignore();
         cin >> menuNum;
-        if (menuNum == 5) {
+        if (menuNum == 9) {
             gecis = false;
             yoneticim.yoneticiMenu();
         }
@@ -386,8 +388,41 @@ void Yonetici::sikayetOku() {
 
 };
 void Yonetici::kuryeAta() {};
-void Yonetici::indirimKoduTanimla() {};
-void Yonetici::faturaGoster() {};
+void Yonetici::indirimKoduTanimla() {
+    temizle();
+    string indirimKodu;
+    int indirimMiktari;
+    string indirimSahibi;
+    cout << "Indirim kodunu belirleyiniz: ";
+    cin >> indirimKodu;
+    cout << "\nIndirim miktarini belirleyiniz:";
+    cin >> indirimMiktari;
+    cout << "\nIndirimi tanimlamak istediginiz kullanicinin adi: ";
+    cin >> indirimSahibi;
+
+    ofstream indirimTXT;
+    indirimTXT.open("indirim.txt", ios_base::app);
+    indirimTXT << indirimKodu << endl;
+    indirimTXT << indirimMiktari << endl;
+    indirimTXT << indirimSahibi << endl;
+    yoneticiMenu();
+};
+void Yonetici::faturaGoster() {
+    temizle();
+    int a = 1;
+    if (faturalar.size() > 0) {
+        for (int i = 0; i < faturalar.size(); i++)
+        {
+            string b = to_string(a);
+            string fiyat = to_string(faturalar[i].siparisFiyat);
+            cout << "Siparis sahibi: " + faturalar[i].siparisSahibi << endl;
+            cout << faturalar[i].siparisOzet;
+            cout << "Toplam fiyat: ";
+            cout << faturalar[i].siparisFiyat << endl;
+            cout << faturalar[i].siparisAdres << endl;
+        }
+    }
+};
 #pragma endregion
 
 #pragma region KULLANICI FONKSIYONLARI
@@ -419,11 +454,10 @@ void Kullanici::kullaniciMenu() {
         break;
     }
 }
-
 void Kullanici::kiyafetGoster() {
     temizle();
     int menuNo;
-    cout << "1'e bas\n";
+    cout << "1. Elbiseler\n2. Tisortler\n3. Pantolonlar\n4. Gomlekler\n5. Etekler\n6. Ayakkabilar\n";
     cin >> menuNo;
 
     switch (menuNo) {
@@ -492,6 +526,7 @@ void Kullanici::elbiseGoster() {
         break;
 
     case 2:
+        temizle();
         for (int i = 0; i < elbiseler.size(); i++)
         {
             if (elbiseler[i] == "Drapeli") {
@@ -515,6 +550,7 @@ void Kullanici::elbiseGoster() {
         kullaniciMenu();
         break;
     case 3:
+        temizle();
         for (int i = 0; i < elbiseler.size(); i++)
         {
 
@@ -586,6 +622,7 @@ void Kullanici::tisortGoster() {
         break;
 
     case 2:
+        temizle();
         for (int i = 0; i < tisortler.size(); i++)
         {
             if (tisortler[i] == "BisikletYaka") {
@@ -609,6 +646,7 @@ void Kullanici::tisortGoster() {
         kullaniciMenu();
         break;
     case 3:
+        temizle();
         for (int i = 0; i < tisortler.size(); i++)
         {
 
@@ -680,6 +718,7 @@ void Kullanici::pantolonGoster() {
         break;
 
     case 2:
+        temizle();
         for (int i = 0; i < pantolonlar.size(); i++)
         {
             if (pantolonlar[i] == "IspanyolPaca") {
@@ -703,6 +742,7 @@ void Kullanici::pantolonGoster() {
         kullaniciMenu();
         break;
     case 3:
+        temizle();
         for (int i = 0; i < pantolonlar.size(); i++)
         {
 
@@ -774,6 +814,7 @@ void Kullanici::gomlekGoster() {
         break;
 
     case 2:
+        temizle();
         for (int i = 0; i < gomlekler.size(); i++)
         {
             if (gomlekler[i] == "Keten") {
@@ -797,6 +838,7 @@ void Kullanici::gomlekGoster() {
         kullaniciMenu();
         break;
     case 3:
+        temizle();
         for (int i = 0; i < gomlekler.size(); i++)
         {
 
@@ -868,6 +910,7 @@ void Kullanici::etekGoster() {
         break;
 
     case 2:
+        temizle();
         for (int i = 0; i < etekler.size(); i++)
         {
             if (etekler[i] == "Kisa") {
@@ -891,6 +934,7 @@ void Kullanici::etekGoster() {
         kullaniciMenu();
         break;
     case 3:
+        temizle();
         for (int i = 0; i < etekler.size(); i++)
         {
 
@@ -962,6 +1006,7 @@ void Kullanici::ayakkabiGoster() {
         break;
 
     case 2:
+        temizle();
         for (int i = 0; i < ayakkabilar.size(); i++)
         {
             if (ayakkabilar[i] == "Topuklu") {
@@ -985,6 +1030,7 @@ void Kullanici::ayakkabiGoster() {
         kullaniciMenu();
         break;
     case 3:
+        temizle();
         for (int i = 0; i < ayakkabilar.size(); i++)
         {
 
@@ -1013,29 +1059,84 @@ void Kullanici::ayakkabiGoster() {
         break;
     }
 };
-
 void Kullanici::sepetiGoruntule() {
     int a = 1;
     int menuNum;
-    for (int i = 0; i < sepet.size(); i++) {
-        string b = to_string(a);
-        string fiyat = to_string(sepet[i].fiyat);
-        cout << b + "." + sepet[i].renk + " " + sepet[i].kiyafetAdi + " " + sepet[i].kategori + "\nBeden: " + sepet[i].beden + "\nFiyat: " + fiyat << endl;
-        a++;
-    }
-    cout << "\n\n1. Sepeti onayla\n2. Sepeti temizle" << endl;
-    cin >> menuNum;
-    switch (menuNum)
-    {
-    case 1:
+    int toplamFiyat = 0;
+    string adres;
+    string ozet;
 
-        break;
-    case 2:
-        sepet.clear();
-        kullanicim.kullaniciMenu();
-        break;
-    default:
-        break;
+    string satir;
+    vector<string> indirimler;
+    ifstream indirimTXT;
+    indirimTXT.open("indirim.txt");
+    while (getline(indirimTXT, satir)) indirimler.push_back(satir);
+
+    if (sepet.size() > 0) {
+        for (int i = 0; i < sepet.size(); i++) {
+            string b = to_string(a);
+            string fiyat = to_string(sepet[i].fiyat);
+            cout << b + "." + sepet[i].renk + " " + sepet[i].kiyafetAdi + " " + sepet[i].kategori + "\nBeden: " + sepet[i].beden + "\nFiyat: " + fiyat + "\n";
+            a++;
+            ozet = ozet + b + "." + sepet[i].renk + " " + sepet[i].kiyafetAdi + " " + sepet[i].kategori + "\nBeden: " + sepet[i].beden + "\nFiyat: " + fiyat + "\n";
+            toplamFiyat = sepet[i].fiyat + toplamFiyat;
+        }
+        cout << "Toplam sepet tutari: ";
+        cout << toplamFiyat;
+
+        cout << "\n\n1. Sepeti onayla\n2. Sepeti temizle" << endl;
+        cin >> menuNum;
+
+        if (menuNum == 1) {
+            temizle();
+            int k;
+            string indirimKuponu;
+            cout << "1. Indirim kuponu girin\n2. Kupon olmadan devam edin\n";
+            cin >> k;
+            if (k == 1) {
+                    cout << "Indirim kuponunu giriniz: ";
+                    cin >> indirimKuponu;
+                    for (int i = 0; i < indirimler.size(); i++)
+                    {
+                        if (indirimler[i] == indirimKuponu && indirimler[i + 2] == kullanicim.kullanici_adi) {
+                            int indirim;
+                            indirim = stoi(indirimler[i + 1]);
+                            toplamFiyat = toplamFiyat - (toplamFiyat * indirim / 100);
+                            Siparis siparisim(kullanicim.kullanici_adi, toplamFiyat, ozet, kullanicim.adresIlce);
+                            faturalar.push_back(siparisim);
+                            sepet.clear();
+                            kullaniciMenu();
+                        }
+                    }
+            }
+            else {
+                    Siparis siparisim(kullanicim.kullanici_adi, toplamFiyat, ozet, kullanicim.adresIlce);
+                    faturalar.push_back(siparisim);
+                    sepet.clear();
+                    kullaniciMenu();
+                }
+
+            if (menuNum == 2) {
+                sepet.clear();
+                kullaniciMenu();
+            }
+
+        }
+        else {
+            int menuNum;
+            cout << "Sepetiniz bos, geri gelmek icin lütfen 9'a basiniz:";
+            cin >> menuNum;
+            switch (menuNum)
+            {
+            case 9:
+                kullaniciMenu();
+                break;
+            default:
+                sepetiGoruntule();
+                break;
+            }
+        }
+
     }
 }
 void Kullanici::siparisTakip() {};
@@ -1063,7 +1164,7 @@ void Kullanici::sifreDegistir() {
     cin >> eskiSifre;
     cout << "\nYeni sifrenizi giriniz: ";
     cin >> yeniSifre;
-    kontrol = kullanicim.kullanici_adi + "." + kullanicim.sifre;
+    kontrol = kullanicim.kullanici_adi + kullanicim.sifre;
     vector<string> kullanicilar;
 
     ifstream kullanicilarTXTokuma;
@@ -1075,7 +1176,7 @@ void Kullanici::sifreDegistir() {
     {
         if (kontrol == kullanicilar[i]) {
             kullanicim.sifre == yeniSifre;
-            kullanicilar[i] = kullanicim.kullanici_adi + "." + yeniSifre;
+            kullanicilar[i] = kullanicim.kullanici_adi + yeniSifre;
             kullanicilar[i + 2] = yeniSifre;
         }
     }
@@ -1094,25 +1195,22 @@ void Kullanici::sifreDegistir() {
 #pragma region GIRIS VE KAYIT FONKSIYONLARI
 void yoneticiGirisMenu() {
     string sifre;
-    string kontrol;
+    string kontrol = "asdfgh";
     string satir;
-    vector<string> kullanicilar;
+    
     temizle();
 
     cout << "Sifre: ";
     cin >> sifre;
-    kontrol = "yonetici." + sifre;
-
-    ifstream kullanicilarTXT;
-    kullanicilarTXT.open("kullanıcılar.txt");
-    while (getline(kullanicilarTXT, satir)) kullanicilar.push_back(satir);
-
-    for (int i = 0; i < kullanicilar.size(); i++)
-    {
-        if (kontrol == kullanicilar[i]) {
-            yoneticim.yoneticiMenu();
-        }
+    if (sifre == kontrol) {
+        yoneticim.yoneticiMenu();
     }
+    else {
+        cout << "Tekrar deneyin.";
+        yoneticiGirisMenu();
+    }
+
+    
 }
 void kullaniciGirisMenu() {
     string kullaniciAdi;
@@ -1120,6 +1218,7 @@ void kullaniciGirisMenu() {
     string kontrol;
     string satir;
     string objeAdi;
+    string adres;
     vector<string> kullanicilar;
     temizle();
 
@@ -1146,8 +1245,7 @@ void kullaniciGirisMenu() {
         }
         karakter = _getch();
     }
-
-    kontrol = kullaniciAdi + "." + sifre;
+    kontrol = kullaniciAdi + sifre;
 
     ifstream kullanicilarTXT;
     kullanicilarTXT.open("kullanıcılar.txt");
@@ -1155,12 +1253,10 @@ void kullaniciGirisMenu() {
 
     for (int i = 0; i < kullanicilar.size(); i++)
     {
-        cout << kullanicilar[i] << endl;
         if (kontrol == kullanicilar[i]) {
-            cout << "basarili" << endl;
-            objeAdi = kullaniciAdi;
-            Kullanici objeAdi(kullaniciAdi, sifre);
-            kullanicim = objeAdi;
+            adres = kullanicilar[i + 4];
+            Kullanici kontrol(kullaniciAdi, sifre, adres);
+            kullanicim = kontrol;
             kullanicim.kullaniciMenu();
             break;
         }
@@ -1190,15 +1286,18 @@ void kullaniciUyeKayit() {
     string eMail;
     string kullaniciAdi;
     string satirlar;
+    string adres;
+    string dogumTarihi;
     int menuNo;
-    regex pattern("^[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+$");
+    regex patternemail("^[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+$");
+    regex patternDogumTarihi("^(0[1-9]|1[0-9]|2[0-9]|3[0,1])([/+-])(0[1-9]|1[0-2])([/+-])(19|20)[0-9]{2}$");
     bool gecis = true;
     temizle();
 
     cout << "Kullanici Adi: ";
     cin >> kullaniciAdi;
 
-    cout << "\nSifre: ";
+    cout << "\nSifre(Sifre 1 kucuk karakter, 1 buyuk karakter, 1 rakam, 1 ozel karakter icermek zorundadir): ";
     char karakter = _getch();
     while (karakter != '\r')
     {
@@ -1218,35 +1317,70 @@ void kullaniciUyeKayit() {
         }
         karakter = _getch();
     }
+    cout << "\n\nAdres: ";
+    cin >> adres;
+
+    bool rakam = false, ozelKarakter = false;
+    bool kucukKarakter = false, buyukKarakter = false;
+    string karakterler = "abcdefghijklmnopqrstu" "vwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+    for (int i = 0; i < sifre.length(); i++) {
+        if (islower(sifre[i]))
+            kucukKarakter = true;
+        if (isupper(sifre[i]))
+            buyukKarakter = true;
+        if (isdigit(sifre[i]))
+            rakam = true;
+
+        size_t ozel = sifre.find_first_not_of(karakterler);
+        if (ozel != string::npos)
+            ozelKarakter = true;
+    }
 
     cin.ignore();
-    cout << "\n\nE-Mail: ";
+    cout << "\nE-Mail: ";
     getline(cin, eMail);
-    if (regex_search(eMail, pattern))
-    {
-        ofstream kullanicilarTXT;
-        kullanicilarTXT.open("kullanıcılar.TXT", ios_base::app);
-        kullanicilarTXT << kullaniciAdi + "." + sifre << endl;
-        kullanicilarTXT << kullaniciAdi << endl;
-        kullanicilarTXT << sifre << endl;
-        kullanicilarTXT << eMail << endl;
-        kullanicilarTXT.close();
+
+    cout << "\nDogum Tarihi(gg-aa-yy): ";
+    getline(cin, dogumTarihi);
+    if (kucukKarakter && buyukKarakter && rakam && ozelKarakter) {
+        if (regex_search(dogumTarihi, patternDogumTarihi)) {
+            if (regex_search(eMail, patternemail))
+            {
+                ofstream kullanicilarTXT;
+                kullanicilarTXT.open("kullanıcılar.TXT", ios_base::app);
+                kullanicilarTXT << kullaniciAdi + sifre << endl;
+                kullanicilarTXT << kullaniciAdi << endl;
+                kullanicilarTXT << sifre << endl;
+                kullanicilarTXT << eMail << endl;
+                kullanicilarTXT << adres << endl;
+                kullanicilarTXT.close();
+            }
+            else {
+                cout << "Lutfen gecerli bir email adresi giriniz." << endl;
+                kullaniciUyeKayit();
+            }
+        }
+        else {
+            cout << "Dogum tarihinizi gecersiz sekilde girdiniz, lutfen tekrar deneyin." << endl;
+            kullaniciUyeKayit();
+        }
     }
     else {
+        cout << "Zayif sifre girdiniz." << endl;
         kullaniciUyeKayit();
     }
+    
 
     while (gecis) {
-        cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 5'e basiniz.\n";
+        cout << "\nBasariyla kaydoldunuz. Geri gelmek icin lutfen 9'a basiniz.\n";
         cin >> menuNo;
-        if (menuNo == 5) {
+        if (menuNo == 9) {
             gecis = false;
             anaMenu();
         }
     }
 }
 #pragma endregion
-
 void temizle() {
     cout << "\x1B[2J\x1B[H";
 }
@@ -1271,4 +1405,5 @@ void anaMenu() {
 int main()  
 {
     anaMenu();
+
 }
